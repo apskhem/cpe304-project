@@ -19,6 +19,7 @@ instructions
     noop    (O-type format)     111
 
 assembly format
+
     (address 0):            lw      0   1   five    load reg1 with 5 (uses symbolic address)
     (address 1):            lw      1   2   3       load reg2 with -1 (uses numeric address)
     (address 2):    start   add     1   2   1       decrement reg1
@@ -29,7 +30,9 @@ assembly format
     (address 7):    five    .fill   5
     (address 8):    neg1    .fill   -1
     (address 9):    stAddr  .fill   start           will contain the address of start
+
 binary format
+
     (address 0):
     (address 1):
     (address 2):
