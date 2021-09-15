@@ -11,14 +11,14 @@ instructions
 
     add     (R-type format)     000 -> [rd]     [rs1]   [rs2]
     nand    (R-type format)     001 -> [rd]     [rs1]   [rs2]
-    lw      (I-type format)     010 -> [ra]     [rd]    [offset]
-    sw      (I-type format)     011
-    beq     (I-type format)     100
-    jalr    (J-type format)     101
-    halt    (O-type format)     110
-    noop    (O-type format)     111
+    lw      (I-type format)     010 -> [rs]     [rt]    [offset]
+    sw      (I-type format)     011 -> [rs]     [rt]    [offset]
+    beq     (I-type format)     100 -> [rs1]    [rs2]   [jmp]
+    jalr    (J-type format)     101 -> [rs]     [jmp]
+    halt    (O-type format)     110 -> *none
+    noop    (O-type format)     111 -> *none
 
-assembly format
+sample-1 assembly format
 
     (address 0):            lw      0   1   five    load reg1 with 5 (uses symbolic address)
     (address 1):            lw      1   2   3       load reg2 with -1 (uses numeric address)
@@ -31,7 +31,7 @@ assembly format
     (address 8):    neg1    .fill   -1
     (address 9):    stAddr  .fill   start           will contain the address of start
 
-binary format
+sample-1 binary format
 
     (address 0):
     (address 1):
