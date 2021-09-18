@@ -2,10 +2,10 @@ lw [register value] [register to be stored] [offset]
 
 instruction formats
 
-    (R-type format):    0000000 [opcode] [rs] [rt] 0000000000000 [rd]
-    (I-type format):    0000000 [opcode] [rs] [rt] [offset]
-    (J-type format):    0000000 [opcode] [rs] [rd] 000000000000000000
-    (O-type format):    0000000 [opcode] 0000000000000000000000000000
+    (R-type format):    0000000 [opcode-3] [rs] [rt] 0000000000000 [rd]
+    (I-type format):    0000000 [opcode-3] [rs] [rt] [offset]
+    (J-type format):    0000000 [opcode-3] [rs] [rd] 000000000000000000
+    (O-type format):    0000000 [opcode-3] 0000000000000000000000000000
 
 instructions
 
