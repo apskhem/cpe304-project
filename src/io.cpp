@@ -22,14 +22,17 @@ int get_file_size(string path) {
     return fsize;
 }
 
-void load_file_buffer(string path, char* memory, int size) {
+char* load_file_buffer(string path, int size) {
+    char* const buffer = new char[size];
+
     ifstream in_file(path, ios::binary);
 
     if (!in_file) {
         throw runtime_error("Error: could not open file " + path + ".");
     }
 
-    in_file.read(memory, size);
-
+    in_file.read(buffer, size);
     in_file.close();
+
+    return buffer;
 }
