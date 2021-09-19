@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     delete[] buffer;
 
     // simulate loaded -unparsed- instruction from memory
-    // simulate(memory, registers);
+    simulate(memory, registers);
 
     delete[] memory;
     delete[] registers;
