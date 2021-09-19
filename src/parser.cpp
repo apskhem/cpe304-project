@@ -1,9 +1,11 @@
+#include <iomanip>
+
 using namespace std;
 
 unsigned int compress_binary(char ch1, char ch2, char ch3, char ch4) {
-    unsigned int a = ch1 << 12;
-    unsigned int b = ch2 << 8;
-    unsigned int c = ch3 << 4;
+    unsigned int a = ch1 << 24;
+    unsigned int b = ch2 << 16;
+    unsigned int c = ch3 << 8;
     unsigned int d = ch4 << 0;
 
     return a + b + c + d;
@@ -18,10 +20,6 @@ void parse_buffer(unsigned int* mem, char* raw, int file_size) {
 
         mem[i / 4] = compress_binary(ch1, ch2, ch3, ch4);
 
-        cout << mem[i / 4] << endl;
+        cout << "0x" << hex << mem[i / 4] << endl;
     }
-}
-
-unsigned int parse_instr_type(unsigned int bin_instr) {
-    return bin_instr >> 22;
 }
