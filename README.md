@@ -43,3 +43,15 @@ sample-1 binary format
     (address 7):
     (address 8):
     (address 9):
+
+# Getting Started with Shell script
+
+## Available Scripts
+
+### `./project.sh build [simulator|assembler] [file path to be lauched]`
+
+Builds the app.
+
+### `./project.sh run [simulator|assembler] [file path to be lauched]`
+
+Builds and runs the app.

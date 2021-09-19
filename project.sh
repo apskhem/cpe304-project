@@ -1,19 +1,24 @@
 #! /usr/local/bin/bash
 
-if [ "$#" -eq 0 ]
+if [ "$#" -lt 3 ]
 then
-    echo "Need at a single execute command argument."
+    echo "Need at a execute command argument, a mode argument, and a file path to be read, e.g ./project.sh run simulator test/machine.bin."
 elif [ "$1" == "run" ]
 then
-    if [ "$#" -lt 2 ]
+    if [ "$2" == "simulator" -o "$2" == "assembler" ]
     then
-        echo "Need a file destination path to be read."
+        g++ src/$2/main.cpp -o build/$2 && ./build/$2 $3
     else
-        g++ src/main.cpp -o build/out && ./build/out $2
+        echo "Invalid mode argument."
     fi
 elif [ "$1" == "build" ]
 then
-    g++ src/main.cpp -o build/out
+    if [ "$2" == "simulator" -o "$2" == "assembler" ]
+    then
+        g++ src/$2/main.cpp -o build/$2
+    else
+        echo "Invalid mode argument."
+    fi
 else
     echo "Unrecognized command argument."
 fi
