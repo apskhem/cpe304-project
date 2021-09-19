@@ -4,7 +4,7 @@
 
 using namespace std;
 
-void interpret(unsigned int* const mem, int* const regs, int* pc) {
+void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halted) {
     unsigned int bin_instr = mem[*pc];
     Instruction instr(bin_instr);
 
@@ -27,8 +27,10 @@ void interpret(unsigned int* const mem, int* const regs, int* pc) {
             int rs1 = instr.rs1();
             int rs2 = instr.rs2();
             int rd = instr.rd();
+            int rs1_val = regs[rs1];
+            int rs2_val = regs[rs2];
 
-            regs[rd] = ~(rs1 & rs2);
+            regs[rd] = ~(rs1_val & rs2_val);
 
             *pc = *pc + 1;
             break;
@@ -89,7 +91,9 @@ void interpret(unsigned int* const mem, int* const regs, int* pc) {
         }
         // halt (O-type)
         case 0b110: {
-            *pc = -1;
+            *is_halted = true;
+
+            *pc = *pc + 1;
             break;
         }
         // noop (O-type)

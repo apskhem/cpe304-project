@@ -39,16 +39,17 @@ void print_final_state(unsigned int* const mem, int* const regs, int* pc, int co
 }
 
 void simulate(unsigned int* const mem, int* const regs) {
+    bool is_halted = false;
     int pc = 0;
     int safe_break_counter = 0;
     int safe_break_ceil = 1000;
 
     print_mem_state(mem);
     
-    while (pc != -1 && safe_break_counter < safe_break_ceil) {
+    while (!is_halted && safe_break_counter < safe_break_ceil) {
         print_state(mem, regs, &pc);
 
-        interpret(mem, regs, &pc);
+        interpret(mem, regs, &pc, &is_halted);
 
         regs[0] = 0;
 
