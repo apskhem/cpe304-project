@@ -1,16 +1,10 @@
-#include <iomanip>
-
 #include "interpreter.cpp"
 
 using namespace std;
 
-void print_initial_state(unsigned int* const mem) {
-    for (int i = 0; i < 65536U; i++) {
-        cout << "memory[ " << i << " ] " << "0x" << hex << mem[i] << endl;
-
-        if (mem[i] == 0) {
-            break;
-        }
+void print_mem_state(unsigned int* const mem) {
+    for (int i = 0; i < 65536U && mem[i]; i++) {
+        cout << "memory[ " << i << " ] " << mem[i] << endl;
     }
 }
 
@@ -21,29 +15,33 @@ void print_state(unsigned int* const mem, int* const regs, int* pc) {
     cout << "\tpc " << *pc << endl;
     cout << "\tmemory:" << endl;
 
-    for (int i = 0; i < 65536U; i++) {
-        cout << "\t\tmemory[ " << i << " ] " << "0x" << hex << mem[i] << endl;
-
-        if (mem[i] == 0) {
-            break;
-        }
+    for (int i = 0; i < 65536U && mem[i]; i++) {
+        cout << "\t\tmemory[ " << i << " ] " << mem[i] << endl;
     }
 
     cout << "\tregisters:" << endl;
 
     for (int i = 0; i < 8; i++) {
-        cout << "\t\treg[ " << i << " ] " << "0x" << hex << regs[i] << endl;
+        cout << "\t\treg[ " << i << " ] " << regs[i] << endl;
     }
 
     cout << "end state" << endl;
 }
 
+void print_final_state(unsigned int* const mem, int* const regs, int* pc, int counter) {
+    cout << "halted" << endl;
+    cout << "total of " << counter << " instructions executed" << endl;
+    cout << "final state of machine: " << endl;
+
+    print_state(mem, regs, pc);
+}
+
 void simulate(unsigned int* const mem, int* const regs) {
     int pc = 0;
     int safe_break_counter = 0;
-    int safe_break_ceil = 20;
+    int safe_break_ceil = 1000;
 
-    print_initial_state(mem);
+    print_mem_state(mem);
     
     while (pc != -1 && safe_break_counter < safe_break_ceil) {
         print_state(mem, regs, &pc);
@@ -55,9 +53,5 @@ void simulate(unsigned int* const mem, int* const regs) {
         safe_break_counter += 1;
     }
 
-    cout << "halted" << endl;
-    cout << "total of " << safe_break_counter << " instructions executed" << endl;
-    cout << "final state of machine: " << endl;
-
-    print_state(mem, regs, &pc);
+    print_final_state(mem, regs, &pc, safe_break_counter);
 }

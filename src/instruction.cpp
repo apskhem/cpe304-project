@@ -32,9 +32,9 @@ public:
 private:
     int get_bin_range(int start, int end) {
         int sll = 32 - (start + 1);
-        int srll = sll + end;
+        int srl = sll + end;
 
-        int res = ((*this).raw << sll) >> srll;
+        int res = ((*this).raw << sll) >> srl;
 
         return res;
     }
