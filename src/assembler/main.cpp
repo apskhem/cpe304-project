@@ -44,7 +44,7 @@ string binToDec(string binary){
 	return decimalStr;
 }
 
-string bitControl(string inputBit){
+string bitControlReg(string inputBit){
 	string control = "000";
 	int i = control.length()-1;
 	int j = inputBit.length()-1;
@@ -60,26 +60,46 @@ string rType(string inst, string regA="000", string regB="000", string destReg="
 	string addOpcode ="000", nandOpcode ="001", unuseBit ="0000000000000";
 	string mc="";
 	if(inst=="add"){
-		mc = mc+addOpcode+bitControl(decToBin(regA))+bitControl(decToBin(regB))+unuseBit+bitControl(decToBin(destReg));
+		mc = mc+addOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+unuseBit+bitControlReg(decToBin(destReg));
 	}
 	else{
-		mc = mc+nandOpcode+bitControl(decToBin(regA))+bitControl(decToBin(regB))+unuseBit+bitControl(decToBin(destReg));
+		mc = mc+nandOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+unuseBit+bitControlReg(decToBin(destReg));
 	}
 	
 	return mc;
 }
 
 string iType(string inst, string regA="000", string regB="000", string offset="0000000000000000" ){
-	return inst;
+	string mc="", lwOpcode ="010", swOpcode = "011", beqOpcode = "100";
+	if(inst=="lw"){
+		mc = mc+lwOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlReg(decToBin(offset));//use othor funtion
+	}
+	else if(inst=="sw"){
+		mc = mc+swOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlReg(decToBin(offset));
+	}
+	else{
+		mc = mc+beqOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlReg(decToBin(offset));
+	}
+	
+	return mc;
 }
 
 string jType(string inst, string regA="000", string regB="000"){
-	string unuseBit="0000000000000000";
+	string mc="", jalrOpcode="101", unuseBit="0000000000000000";
+	mc = mc+jalrOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+unuseBit;
+	
 	return inst;
 }
 
 string oType(string inst){
-	string unuseBit="0000000000000000000000";
+	string mc="", haltOpcode="110", noopOpcode="111", unuseBit="0000000000000000000000";
+	if(inst=="halt"){
+		mc = mc+haltOpcode+unuseBit;
+	}
+	else{
+		mc = mc+noopOpcode+unuseBit;
+	}
+	
 	return inst;
 }
 
