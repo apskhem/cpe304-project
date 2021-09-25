@@ -56,6 +56,18 @@ string bitControlReg(string inputBit){
 	return control;
 }
 
+string bitControlImm(string inputBit){
+	string control = "0000000000000000";
+	int i = control.length()-1;
+	int j = inputBit.length()-1;
+	while(j>=0){
+		control[i]=inputBit[j];
+		i--;
+		j--;
+	}
+	return control;
+}
+
 string rType(string inst, string regA="000", string regB="000", string destReg="000" ){
 	string addOpcode ="000", nandOpcode ="001", unuseBit ="0000000000000";
 	string mc="";
@@ -72,13 +84,13 @@ string rType(string inst, string regA="000", string regB="000", string destReg="
 string iType(string inst, string regA="000", string regB="000", string offset="0000000000000000" ){
 	string mc="", lwOpcode ="010", swOpcode = "011", beqOpcode = "100";
 	if(inst=="lw"){
-		mc = mc+lwOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlReg(decToBin(offset));//use othor funtion
+		mc = mc+lwOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));//use othor funtion
 	}
 	else if(inst=="sw"){
-		mc = mc+swOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlReg(decToBin(offset));
+		mc = mc+swOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
 	}
 	else{
-		mc = mc+beqOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlReg(decToBin(offset));
+		mc = mc+beqOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
 	}
 	
 	return mc;
