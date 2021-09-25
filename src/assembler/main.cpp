@@ -121,26 +121,47 @@ string oType(string inst){
 
 int main(){
 	stringstream ss;
-	string instLine="add 1 2 1";
+	string instLine;
 	string arg0, arg1, arg2, arg3, arg4;
+	
 	int lines=0;
-	ss<<instLine;
-	ss>>arg1>>arg2>>arg3>>arg4;
 	
-	string s;
-	s = rType(arg1, arg2, arg3, arg4);
-	cout<<s<<endl;
-	cout<<decToBin("655361")<<endl;
-	cout<<binToDec(s);
-	
-	
-	/*ifstream inputFile;
-	inputFile.open("inputassembly.txt");
+	ifstream inputFile;
+	inputFile.open("inputassemblytest.txt");
 	
 	while(getline(inputFile,instLine)){
 		lines = lines+1;
 	}
-	inputFile.close();*/
+	inputFile.close();
+	
+	cout<<lines;
+	string mc[lines], mem[lines];
+	
+	inputFile.open("inputassemblytest.txt");
+	
+	int j=0;
+	
+	while(getline(inputFile,instLine)){
+		ss<<instLine;
+		ss>>arg0>>arg1;
+		if(arg0=="and"){}
+		else if (arg0=="nand"){}
+		else if (arg0=="lw"){}
+		else if (arg0=="sw"){}
+		else if (arg0=="beq"){}
+		else if (arg0=="jalr"){}
+		else if (arg0=="done"){}
+		else if (arg0=="noop"){}
+		else{
+			mem[j]=arg0;
+		}
+		j++;
+	} 
+	inputFile.close();
+	
+	for(int i=0;i<mem.length();i++){
+		cout<<mem[i]<<endl;
+	}
 	
 
 	return 0;
