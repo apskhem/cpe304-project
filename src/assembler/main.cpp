@@ -24,16 +24,16 @@ int main(){
 	}
 	inputFile.close();
 	
-	string mc[lines], mem[lines];
+	string mc[lines]={"NY","NY","NY","NY","NY","NY","NY","NY","NY","NY"}, mem[lines]={"NY","NY","NY","NY","NY","NY","NY","NY","NY","NY"};
 	
 	inputFile.open("inputassemblytest.txt");
 	
 	int j = 0;
 	
 	while(getline(inputFile,instLine)){
-		ss<<instLine;
-		ss>>arg0>>arg1>>arg2>>arg3;
-		//cout<<arg0<<endl<<arg1<<endl;
+		stringstream inputSs;
+		inputSs<<instLine;
+		inputSs>>arg0;
 		if(arg0 == "and");
 		else if (arg0 == "nand");
 		else if (arg0 == "lw");
@@ -47,10 +47,6 @@ int main(){
 		j++;
 	} 
 	inputFile.close();
-	
-	for(int i = 0;i < lines;i++){
-		cout<<mem[i]<<endl;
-	}
 	
 
 	return 0;
