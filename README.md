@@ -55,3 +55,5 @@ Builds the app.
 ### `./project.sh run [simulator|assembler] [file path to be lauched]`
 
 Builds and runs the app.
+
+[https://docs.google.com/document/d/1pPPcLB-Py4FEpzhrFXzngHWpZWRNnk5hxilXXESu75A/edit?fbclid=IwAR2yzCX4YDY69kweeUpBiNJloPRTHdTv4xnocrXVYnmKvA-qB-K5TCNBLo0](Documentation Link)
