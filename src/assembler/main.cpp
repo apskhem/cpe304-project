@@ -12,7 +12,8 @@ using namespace std;
 
 // 48 to 57 char(0 to 9)
 
-int main(){
+int main(char* fileName){
+	
 	stringstream ss;
 	string instLine;
 	string arg[6];
@@ -26,25 +27,33 @@ int main(){
 	
 	inputFile.close();
 	
-	string mc[lines] = {}, 
+	string mc[lines] = {},
 		   mem[lines] = {};
-		   
+
 	for(int i = 0; i < lines;i++) mem[i] = "NT";
 	
-		   
 	char instType[lines];
 	
 	inputFile.open("inputassemblytest.txt");
 	
 	int j = 0;
 	
-	while(getline(inputFile,instLine)){
+	while(getline(inputFile, instLine)){
 		stringstream inputSs;
 		inputSs<<instLine;
-		inputSs>>arg[0];
+		inputSs>>arg[0]>>arg[1];
 		
-		instType[j] = type(arg[0]);
-		if(instType[j] == '0' || instType[j] == 's') mem[j] = arg[0];
+		instType[j] = type(arg[0], arg[1]);
+		
+		if(arg[1] == ".fill") mem[j] = arg[0];
+		
+		if(instType[j] == 'a') {
+			stringstream temp;
+			temp<<j;
+			temp>>mem[j];
+			mem[j] = arg[0] + ' ' + mem[j];
+		}
+		
 		j++;
 	} 
 	inputFile.close();
@@ -56,21 +65,23 @@ int main(){
 		stringstream input;
 		input<<instLine;
 		
-		if(instType[j] == 's'){
+		if(instType[j] == 'a'){
 			input>>arg[4]>>arg[0]>>arg[1]>>arg[2]>>arg[3];
-			instType[j] = type(arg[0]);
+			instType[j] = type(arg[0], arg[1]);
 		}
 		else input>>arg[0]>>arg[1]>>arg[2]>>arg[3];
 		
 		switch(instType[j]){
+			
 			case 'r':   
 						for(int k = 1; k < 4;k++){
 							if(!isNum(arg[k])) {
 								for(int i = 0; i < lines; i++){
 									if(arg[k] == mem[i]){
-									stringstream num;
-									num<<i;
-									num>>arg[k];
+										stringstream num;
+										num<<i;
+										num>>arg[k];
+										break;
 									}		
 								}
 							}
@@ -83,14 +94,25 @@ int main(){
 							if(!isNum(arg[k])) {
 								for(int i = 0; i < lines; i++){
 									if(arg[k] == mem[i]){
-									stringstream num;
-									num<<i;
-									num>>arg[k];
+										stringstream num;
+										num<<i;
+										num>>arg[k];
+										break;
+									}
+									stringstream addr;
+									string pos = "", name = "";
+									addr<<mem[i];
+									addr>>name>>pos;
+									if(arg[k] == name){
+										arg[k] = 'a' + pos;
+									//	cout<<arg[k]<<endl<<pos<<endl<<k<<endl;
+										break;
 									}		
 								}
 							}
 						}
-						mc[j] = iType(arg[0], arg[1], arg[2], arg[3]);
+						
+						mc[j] = iType(arg[0], arg[1], arg[2], arg[3], j);
 						break;
 						
 			case 'j': 	
@@ -98,9 +120,10 @@ int main(){
 							if(!isNum(arg[k])) {
 								for(int i = 0; i < lines; i++){
 									if(arg[k] == mem[i]){
-									stringstream num;
-									num<<i;
-									num>>arg[k];
+										stringstream num;
+										num<<i;
+										num>>arg[k];
+										break;
 									}		
 								}
 							}
@@ -112,24 +135,34 @@ int main(){
 						else mc[j] = oType(arg[0]);
 						break;
 							
-			case '0':	
+			case 'f':	
 						if(!isNum(arg[2])) {
 								for(int i = 0; i < lines; i++){
 									if(arg[2] == mem[i]){
-									stringstream num;
-									num<<i;
-									num>>arg[2];
+										stringstream num;
+										num<<i;
+										num>>arg[2];
+										break;
+									}
+									stringstream addr;
+									string pos = "", name = "";
+									addr<<mem[i];
+									addr>>name>>pos;
+									if(arg[2] == name){
+										arg[2] = pos;
+										break;
 									}		
+									
 								}
 						}
 						mc[j] = bitControlImm(decToBin(arg[2]));
-						break;															
+						break;														
 		}
 		j++;
 	}
 	
 	for(int i = 0; i < lines; i++){
-		cout<<binToDec(mc[i])<<endl;
+		cout<<mc[i]<<endl;
 	}
 	
 	return 0;

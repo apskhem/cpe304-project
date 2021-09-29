@@ -3,7 +3,9 @@
 #include<string>
 #include<cmath>
 
+
 using namespace std;
+
 
 string decToBin(string decimal){
 	stringstream ss;
@@ -73,4 +75,11 @@ string binToDec(string binary){
 	ss<<decimal;
 	ss>>decimalStr;
 	return decimalStr;
+}
+
+bool isNum(string fs){
+	int i = 0;
+	if(fs[0] == '-') i = 1;
+	if(int(fs[i]) >= 48 && int(fs[i]) <= 57) return true;
+	else return false;
 }

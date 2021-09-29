@@ -41,14 +41,25 @@ string rType(string inst, string regA = "000", string regB = "000", string destR
 	return mc;
 }
 
-string iType(string inst, string regA="000", string regB="000", string offset="0000000000000000" ){
+string iType(string inst, string regA = "000", string regB = "000", string offset="0000000000000000" , int line = 0){
 	string mc = "00000000", lwOpcode = "010", swOpcode = "011", beqOpcode = "100";
 	
 	if(inst == "lw") mc = mc+lwOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
 	
-	else if(inst=="sw") mc = mc+swOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
+	else if(inst == "sw") mc = mc+swOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
 
-	else mc = mc+beqOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
+	else if(inst == "beq") {
+			if(!isNum(offset)){
+				stringstream offnum;
+				int des;
+				offnum<<offset.substr(1, offset.length() - 1);
+				offnum>>des;
+				des = des - 1 - line;				
+				offset = to_string(des);
+				
+			}
+			mc = mc + beqOpcode + bitControlReg(decToBin(regA)) + bitControlReg(decToBin(regB)) + bitControlImm(decToBin(offset));	
+	}
 	
 	return mc;
 }
@@ -69,14 +80,9 @@ string oType(string inst){
 	return mc;
 }
 
-bool isNum(string fs){
-	int i = 0;
-	if(fs[0] == '-') i = 1;
-	if(int(fs[i]) >= 48 && int(fs[i]) <= 57) return true;
-	else return false;
-}
 
-char type(string inst){
+
+char type(string inst, string label){
 	if(inst == "add") return 'r';
 	else if (inst == "nand") return 'r';
 	else if (inst == "lw") return 'i';
@@ -85,8 +91,9 @@ char type(string inst){
 	else if (inst == "jalr") return 'j';
 	else if (inst == "done") return 'o';
 	else if (inst == "noop") return 'o';
-	else if (inst == "start") return 's';
-	else return '0';
+	else if (label == ".fill") return 'f';
+	
+	else return 'a';
 }
 
 
