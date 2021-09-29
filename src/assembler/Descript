@@ -1,0 +1,6 @@
+                                                                  Make me better please
+
+          #include <"machinecodeconvert"> // check path for import
+          
+          input filename(string or char*) to funtion
+            ex: string* myMachineCode =  to_machine_code("fileName.txt") 
