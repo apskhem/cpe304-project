@@ -12,7 +12,7 @@ using namespace std;
 
 // 48 to 57 char(0 to 9)
 
-int main(char* fileName){
+/* int main(char* fileName){
 	
 	stringstream ss;
 	string instLine;
@@ -166,4 +166,9 @@ int main(char* fileName){
 	}
 	
 	return 0;
+} */
+
+int main(){
+	string* machineCode = to_machine_code("inputassemblytest.txt");
+	for(int i = 0; i < machineCode->length() - 1; i++) cout<<machineCode[i]<<endl;
 }
