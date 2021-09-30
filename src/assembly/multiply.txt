@@ -3,7 +3,7 @@
         lw      0   3   mplier
         lw      0   5   check
         lw      0   6   neg1
-loop    beq     0   5   8
+loop    beq     0   4   8
         add     1   1   1
         nand    2   5   7
         nand    7   7   7
