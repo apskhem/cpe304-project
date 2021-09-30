@@ -1,0 +1,21 @@
+        lw      0   4   round           //
+        lw      0   2   mcand           //
+        lw      0   3   mplier           //
+        lw      0   5   check           //
+        lw      0   6   neg1           //
+loop    beq     0   5   8           //check until 15 rounds
+        add     1   1   1           //return += return
+        nand    2   5   7           //mcand & 16384 (using nand)
+        nand    7   7   7           //mcand & 16384
+        beq     0   7   1           //if & result is false skip 1 line
+        add     1   3   1           //result += mplier
+        add     2   2   2           //mcand *=2
+        add     4   6   4           //round -=1
+        beq     0   0   loop        //back to loop
+        noop
+done    halt                        //end
+round   .fill   15
+check   .fill   16384
+mcand   .fill   32456
+mplier  .fill   315
+neg1    .fill   -1
