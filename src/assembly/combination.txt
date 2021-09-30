@@ -21,7 +21,8 @@ add 2 7 2
 add 5 6 5          
 sw 5 1 address     
 add 5 6 5         
-sw 5 2 address     
+sw 5 2 address
+beq 0 0 comb      
 yes add 3 6 3     
 beq 0 0 comb      
 noop 
