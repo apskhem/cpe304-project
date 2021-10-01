@@ -1,15 +1,20 @@
 #! /usr/local/bin/bash
 
-if [ "$#" -lt 3 ]
+if [ "$#" -lt 2 ]
 then
-    echo "Need at a execute command argument, a mode argument, and a file path to be read, e.g ./project.sh run simulator test/machine.bin."
+    echo "error: need a mode argument, e.g ./project.sh run simulator."
 elif [ "$1" == "run" ]
 then
-    if [ "$2" == "simulator" -o "$2" == "assembler" ]
+    if [ "$#" -lt 3 ]
     then
-        g++ src/$2/main.cpp -o build/$2 && ./build/$2 $3
+        echo "error: need file path argument to be executed."
     else
-        echo "Invalid mode argument."
+        if [ "$2" == "simulator" -o "$2" == "assembler" ]
+        then
+            g++ src/$2/main.cpp -o build/$2 && ./build/$2 $3
+        else
+            echo "Invalid mode argument."
+        fi
     fi
 elif [ "$1" == "build" ]
 then

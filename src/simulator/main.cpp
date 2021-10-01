@@ -12,6 +12,10 @@ unsigned int* const memory = new unsigned int[65536U];
 int* const registers = new int[8U];
 
 int main(int argc, char* argv[]) {
+    if (argc < 2) {
+        throw runtime_error("Error: need a source file to be executed.");
+    }
+
     string in_file_name = argv[1];
 
     int file_size = get_file_size(in_file_name);
@@ -29,7 +33,7 @@ int main(int argc, char* argv[]) {
 
     delete[] buffer;
 
-    // simulate loaded -unparsed- instruction from memory
+    // simulate loaded instruction from memory
     simulate(memory, registers);
 
     delete[] memory;
