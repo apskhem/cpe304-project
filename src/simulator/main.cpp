@@ -13,7 +13,7 @@ int* const registers = new int[8U];
 
 int main(int argc, char* argv[]) {
     if (argc < 2) {
-        throw runtime_error("Error: need a source file to be executed.");
+        throw runtime_error("need a source file to be executed.");
     }
 
     string in_file_name = argv[1];
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) {
 
     // every instruction has 4-byte length, so it must follow size of n * 4
     if (file_size % 4) {
-        throw runtime_error("Error: unwell formatted binary instruction file.");
+        throw runtime_error("unwell formatted binary instruction file.");
     }
 
     // get file binary buffer

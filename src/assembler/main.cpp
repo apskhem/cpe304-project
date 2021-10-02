@@ -9,13 +9,12 @@
 
 using namespace std;
 
-// 48 to 57 char(0 to 9)
+void write_binary(string in, string path) {
+	if (in.size() % 4) {
+		throw runtime_error("unwell formatted binary instruction input.");
+	}
 
-void write_binary(string in, string file) {
-	cout << in.size() << endl;
-
-	ofstream out;
-	out.open(file, std::fstream::out);
+	ofstream out(path, fstream::out);
 
 	int len = in.size();
 	unsigned char byte = 0;
@@ -43,10 +42,11 @@ void write_binary(string in, string file) {
 	out.close();
 }
 
+// 48 to 57 char(0 to 9)
 int main(int argc, char* argv[]) {
 	// check for input file argument
 	if (argc < 2) {
-        throw runtime_error("Error: need a source file to be executed.");
+        throw runtime_error("need a source file to be executed.");
     }
 
     string in_file_name = argv[1];
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
 	// transform string
 	string* machineCode = to_machine_code(in_file_name);
 
-	// join all string together
+	// join all string lines together
 	string full_str = "";
 
 	for (int i = 0; i < lines; i++) {
@@ -63,9 +63,11 @@ int main(int argc, char* argv[]) {
 	}
 
 	cout << full_str << endl;
+	cout << full_str.size() << endl;
 
 	// write file in binary
 	write_binary(full_str, "tests/machine/out.bin");
+	
 
 	delete[] machineCode;
 }
