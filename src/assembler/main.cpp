@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 	cout << full_str << endl;
 
 	// write file in binary
-	write_binary(full_str, "out.bin");
+	write_binary(full_str, "tests/machine/out.bin");
 
 	delete[] machineCode;
 }
