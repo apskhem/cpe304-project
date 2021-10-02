@@ -4,6 +4,7 @@
 using namespace std;
 
 string * output = nullptr;
+int lines = 0;
 
 string bitControlReg(string inputBit){
 	string control = "000";
@@ -102,9 +103,8 @@ string *to_machine_code(string fileName){
 	string instLine;
 	string arg[6];
 	
-	int lines = 0;
-	
-	ifstream inputFile(fileName);
+	ifstream inputFile;
+	inputFile.open(fileName);
 	
 	while(getline(inputFile,instLine)) lines = lines+1;
 	
