@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string * output;
+string * output = nullptr;
 
 string bitControlReg(string inputBit){
 	string control = "000";

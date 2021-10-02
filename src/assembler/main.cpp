@@ -168,7 +168,16 @@ using namespace std;
 	return 0;
 } */
 
-int main(){
-	string* machineCode = to_machine_code("inputassemblytest.txt");
-	for(int i = 0; i < machineCode->length() - 1; i++) cout<<machineCode[i]<<endl;
+int main(int argc, char* argv[]) {
+	if (argc < 2) {
+        throw runtime_error("Error: need a source file to be executed.");
+    }
+
+    string in_file_name = argv[1];
+
+	string* machineCode = to_machine_code(in_file_name);
+
+	for (int i = 0; i < machineCode->length() - 1; i++) {
+		cout << machineCode[i] << endl;
+	}
 }
