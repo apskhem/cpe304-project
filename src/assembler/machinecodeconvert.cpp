@@ -241,6 +241,10 @@ string *to_machine_code(string fileName){
 								}
 						}
 						mc[j] = bitControlImm(decToBin(arg[2]));
+						if(mc[j][0] == '1'){
+							mc[j] = "1111111111111111" + mc[j];
+						}
+						else mc[j] = "0000000000000000" + mc[j];
 						break;														
 		}
 		j++;
