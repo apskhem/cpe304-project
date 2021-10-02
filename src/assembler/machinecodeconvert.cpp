@@ -111,10 +111,10 @@ string *to_machine_code(string fileName){
 	
 	inputFile.close();
 	
-	string mc[lines] = {},
-		   mem[lines] = {};
-		   
-		   output = new string[lines];
+	string* mc = new string[lines];
+	string* mem = new string[lines];
+
+	output = new string[lines];
 
 	for(int i = 0; i < lines;i++) mem[i] = "NT";
 	
@@ -250,6 +250,9 @@ string *to_machine_code(string fileName){
 	for(int i = 0; i < lines; i++){
 		output[i] = mc[i];
 	}
+
+	delete[] mc;
+	delete[] mem;
 	
 	return output;
 }
