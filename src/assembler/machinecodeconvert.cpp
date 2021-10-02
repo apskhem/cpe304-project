@@ -103,8 +103,7 @@ string *to_machine_code(string fileName){
 	string instLine;
 	string arg[6];
 	
-	ifstream inputFile;
-	inputFile.open(fileName);
+	ifstream inputFile(fileName);
 	
 	while(getline(inputFile,instLine)) lines = lines+1;
 	

@@ -14,22 +14,47 @@ using namespace std;
 void write_binary(string in, string file) {
 	cout << in.size() << endl;
 
-	ofstream myfile;
-	myfile.open("example.bin", std::fstream::out);
-	myfile << (unsigned char) 255 << (unsigned char) 255;
-	myfile.close();
+	ofstream out;
+	out.open(file, std::fstream::out);
+
+	int len = in.size();
+	unsigned char byte = 0;
+	int i = 0;
+	while (true) {
+		if (i % 8 == 0 && i != 0) {
+			out << byte;
+			byte = 0;
+		}
+		else {
+			byte = byte << 1;
+		}
+
+		if (i >= len) {
+			break;
+		}
+
+		if (in[i] == '1') {
+			byte += 1;
+		}
+
+		i++;
+	}
+
+	out.close();
 }
 
-
 int main(int argc, char* argv[]) {
+	// check for input file argument
 	if (argc < 2) {
         throw runtime_error("Error: need a source file to be executed.");
     }
 
     string in_file_name = argv[1];
 
+	// transform string
 	string* machineCode = to_machine_code(in_file_name);
 
+	// join all string together
 	string full_str = "";
 
 	for (int i = 0; i < lines; i++) {
@@ -39,7 +64,8 @@ int main(int argc, char* argv[]) {
 
 	cout << full_str << endl;
 
+	// write file in binary
 	write_binary(full_str, "out.bin");
+
+	delete[] machineCode;
 }
-
-
