@@ -41,3 +41,5 @@ int main(int argc, char* argv[]) {
 
 	write_binary(full_str, "out.bin");
 }
+
+

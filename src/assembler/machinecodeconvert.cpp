@@ -34,7 +34,7 @@ string bitControlImm(string inputBit){
 
 string rType(string inst, string regA = "000", string regB = "000", string destReg = "000" ){
 	string addOpcode = "000", nandOpcode = "001", unuseBit = "0000000000000";
-	string mc = "00000000";
+	string mc = "0000000";
 	if(inst == "add"){
 		mc = mc+addOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+unuseBit+bitControlReg(decToBin(destReg));
 	}
@@ -46,7 +46,7 @@ string rType(string inst, string regA = "000", string regB = "000", string destR
 }
 
 string iType(string inst, string regA = "000", string regB = "000", string offset="0000000000000000" , int line = 0){
-	string mc = "00000000", lwOpcode = "010", swOpcode = "011", beqOpcode = "100";
+	string mc = "0000000", lwOpcode = "010", swOpcode = "011", beqOpcode = "100";
 	
 	if(inst == "lw") mc = mc+lwOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
 	
@@ -69,14 +69,14 @@ string iType(string inst, string regA = "000", string regB = "000", string offse
 }
 
 string jType(string inst, string regA = "000", string regB = "000"){
-	string mc = "00000000", jalrOpcode = "101", unuseBit = "0000000000000000";
+	string mc = "0000000", jalrOpcode = "101", unuseBit = "0000000000000000";
 	mc = mc+jalrOpcode + bitControlReg(decToBin(regA)) + bitControlReg(decToBin(regB)) + unuseBit;
 	
 	return mc;
 }
 
 string oType(string inst){	 
-	string mc = "00000000", haltOpcode = "110", noopOpcode = "111", unuseBit = "0000000000000000000000";
+	string mc = "0000000", haltOpcode = "110", noopOpcode = "111", unuseBit = "0000000000000000000000";
 	
 	if(inst == "halt") mc = mc + haltOpcode + unuseBit;
 	else mc = mc + noopOpcode + unuseBit;
@@ -241,6 +241,10 @@ string *to_machine_code(string fileName){
 								}
 						}
 						mc[j] = bitControlImm(decToBin(arg[2]));
+						if(mc[j][0] == '1'){
+							mc[j] = "1111111111111111" + mc[j];
+						}
+						else mc[j] = "0000000000000000" + mc[j];
 						break;														
 		}
 		j++;
