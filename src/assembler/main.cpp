@@ -10,9 +10,9 @@
 using namespace std;
 
 void write_binary(string in, string path) {
-	if (in.size() % 4) {
-		throw runtime_error("unwell formatted binary instruction input.");
-	}
+//	if (in.size() % 4) {
+//		throw runtime_error("unwell formatted binary instruction input.");
+//	}
 
 	ofstream out(path, fstream::out);
 
@@ -42,14 +42,20 @@ void write_binary(string in, string path) {
 	out.close();
 }
 
+void create_file(string, string);
+	
+
+
 // 48 to 57 char(0 to 9)
 int main(int argc, char* argv[]) {
 	// check for input file argument
-	if (argc < 2) {
-        throw runtime_error("need a source file to be executed.");
-    }
+//	if (argc < 2) {
+  //      throw runtime_error("need a source file to be executed.");
+  //  }
 
-    string in_file_name = argv[1];
+  //  string in_file_name = argv[1];
+
+	string in_file_name = "combination.txt";
 
 	// transform string
 	string* machineCode = to_machine_code(in_file_name);
@@ -59,15 +65,23 @@ int main(int argc, char* argv[]) {
 
 	for (int i = 0; i < lines; i++) {
 		full_str += machineCode[i];
-		// cout << machineCode[i].length() << endl;
+		//cout << machineCode[i].length() << endl;
 	}
 
-	cout << full_str << endl;
+	//cout << full_str << endl;
 	cout << full_str.size() << endl;
 
 	// write file in binary
-	write_binary(full_str, "tests/machine/out.bin");
+//	write_binary(full_str, "combination");
+	create_file(full_str, "combination");
 	
-
 	delete[] machineCode;
+}
+
+void create_file(string machineCode, string path){
+	ofstream myfile;
+  	myfile.open (path + ("_out.txt"), fstream::out);
+  	myfile << machineCode;	
+	//cout<<machineCode.length();
+  	myfile.close();
 }
