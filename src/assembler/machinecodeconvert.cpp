@@ -59,8 +59,7 @@ string iType(string inst, string regA = "000", string regB = "000", string offse
 				offnum<<offset.substr(1, offset.length() - 1);
 				offnum>>des;
 				des = des - 1 - line;				
-				offset = to_string(des);
-				
+				offset = to_string(des);		
 			}
 			mc = mc + beqOpcode + bitControlReg(decToBin(regA)) + bitControlReg(decToBin(regB)) + bitControlImm(decToBin(offset));	
 	}
@@ -217,8 +216,7 @@ string *to_machine_code(string fileName){
 			case 'o':
 						if(arg[1] == "halt") mc[j] = oType(arg[1]);
 						else mc[j] = oType(arg[0]);
-						break;
-							
+						break;					
 			case 'f':	
 						if(!isNum(arg[2])) {
 								for(int i = 0; i < lines; i++){

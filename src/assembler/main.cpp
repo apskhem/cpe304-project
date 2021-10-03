@@ -55,10 +55,12 @@ int main(int argc, char* argv[]) {
 
   //  string in_file_name = argv[1];
 
-	string in_file_name = "combination.txt";
+	string in_file_name = "combination";
+	
+	string fileName = in_file_name + ".txt";
 
 	// transform string
-	string* machineCode = to_machine_code(in_file_name);
+	string* machineCode = to_machine_code(fileName);
 
 	// join all string lines together
 	string full_str = "";
@@ -73,7 +75,7 @@ int main(int argc, char* argv[]) {
 
 	// write file in binary
 //	write_binary(full_str, "combination");
-	create_file(full_str, "combination");
+	create_file(full_str, in_file_name);
 	
 	delete[] machineCode;
 }
