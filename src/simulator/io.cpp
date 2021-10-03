@@ -7,32 +7,46 @@
 
 using namespace std;
 
-int get_file_size(string path) {
-    ifstream in_file(path, ios::binary);
+void parse_file_buffer(unsigned int* mem, string in) {
+    // every instruction has 4-byte length, so it must follow size of n * 4
+	if (in.size() % 4) {
+		throw runtime_error("unwell formatted binary instruction input.");
+	}
 
-    if (!in_file) {
-        throw runtime_error("could not open file " + path + ".");
-    }
+	int len = in.size();
+	unsigned int instr = 0;
+    int mem_idx = 0;
+	int i = 0;
+	while (true) {
+		if (i % 32 == 0 && i != 0) {
+            mem[mem_idx] = instr;
+			mem_idx += 1;
+		}
+		else {
+			instr = instr << 1;
+		}
 
-    in_file.seekg(0, ios::end);
-    int fsize = in_file.tellg();
+		if (i >= len) {
+			break;
+		}
 
-    in_file.close();
+		if (in[i] == '1') {
+			instr += 1;
+		}
 
-    return fsize;
+		i += 1;
+	}
 }
 
-char* load_file_buffer(string path, int size) {
-    char* const buffer = new char[size];
-
+char* load_memory(unsigned int* mem, string path) {
     ifstream in_file(path, ios::binary);
 
     if (!in_file) {
         throw runtime_error("could not open file " + path + ".");
     }
 
-    in_file.read(buffer, size);
+    string text;
+    getline(in_file, text);
+    parse_file_buffer(mem, text);
     in_file.close();
-
-    return buffer;
 }

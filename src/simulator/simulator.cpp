@@ -45,6 +45,8 @@ void simulate(unsigned int* const mem, int* const regs) {
     int safe_break_ceil = 1000;
 
     print_mem_state(mem);
+
+    return;
     
     while (!is_halted && safe_break_counter < safe_break_ceil) {
         print_state(mem, regs, &pc);
