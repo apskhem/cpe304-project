@@ -17,14 +17,14 @@ void parse_file_buffer(unsigned int* mem, string in) {
 	unsigned int instr = 0;
     int mem_idx = 0;
 	int i = 0;
+
 	while (true) {
 		if (i % 32 == 0 && i != 0) {
             mem[mem_idx] = instr;
 			mem_idx += 1;
 		}
-		else {
-			instr = instr << 1;
-		}
+		
+		instr = instr << 1;
 
 		if (i >= len) {
 			break;
