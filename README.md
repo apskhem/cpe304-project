@@ -1,4 +1,12 @@
-lw [register value] [register to be stored] [offset]
+Due date: 8th Oct. 2021
+Presentation date: 13:30, 9th Oct. 2021
+
+Requirements:
+* Programs in Assembly Language.
+* Behavioral simulator.
+* Assembler.
+
+An SMC Computer is a 32-bit computer, using word-addressing, has 8 registers and 65,536 words of memory. There are 4 types of instruction format including R-type, I-type, J-type, and O-type. the zeroth register must always be zero valued.
 
 instruction formats
 
@@ -31,18 +39,21 @@ sample-1 assembly format
     (address 8):    neg1    .fill   -1
     (address 9):    stAddr  .fill   start           will contain the address of start
 
-sample-1 binary format
+registers
 
-    (address 0):
-    (address 1):
-    (address 2):
-    (address 3):
-    (address 4):
-    (address 5):
-    (address 6):
-    (address 7):
-    (address 8):
-    (address 9):
+    $0  value 0.
+    $1  n input to the function.
+    $2  r input to the function.
+    $3  return value of the function.
+    $4  local variable for the function.
+    $5  stack pointer.
+    $6  temporary value (can hold different values at different times, e.g. +1, -1, function address).
+    $7  return address.
+    
+stricter rules:
+* (assembler): outputting the machine-code file.
+* (assembler): call exit(0) if there is any error in the source code, otherwise call exit(1) for successful execution.
+* (simulator): initialize all registers with 0.
 
 # Getting Started with Shell script
 
@@ -56,4 +67,8 @@ Builds the app.
 
 Builds and runs the app.
 
-[https://docs.google.com/document/d/1pPPcLB-Py4FEpzhrFXzngHWpZWRNnk5hxilXXESu75A/edit?fbclid=IwAR2yzCX4YDY69kweeUpBiNJloPRTHdTv4xnocrXVYnmKvA-qB-K5TCNBLo0](Documentation Link)
+---
+
+* [Documentation Link](https://docs.google.com/document/d/1pPPcLB-Py4FEpzhrFXzngHWpZWRNnk5hxilXXESu75A/edit?fbclid=IwAR2yzCX4YDY69kweeUpBiNJloPRTHdTv4xnocrXVYnmKvA-qB-K5TCNBLo0)
+
+* [Role Link](https://www.figma.com/file/8FgUeychlmIqn0tGLKPz4A/ComAxP?node-id=36%3A2996)
