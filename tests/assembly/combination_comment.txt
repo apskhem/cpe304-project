@@ -8,7 +8,7 @@
 comb    beq 0 5 19          // if x5(stack pointer) == 0 ? goto noop : next instruction
         lw 5 2 address      // top r from stack
         sw 5 0 address	    // pop from stack
-        add 5 7 5		    // stack pointer - 1 (size - 1)
+        add 5 7 5	        // stack pointer - 1 (size - 1)
         lw 5 1 address      // top n from stack
         sw 5 0 address      // pop from stack
         beq 1 2 yes         // if n == r ? goto yes : next instruction
