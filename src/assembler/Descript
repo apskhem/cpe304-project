@@ -1,8 +1,0 @@
-                                                                  Make me better please
-
-          #include <"machinecodeconvert"> // check path for import
-          
-          input filename(string or char*) to funtion
-            ex: string* myMachineCode =  to_machine_code("fileName.txt") 
-            
-           * if Error try to add -std=c++11 to compiler

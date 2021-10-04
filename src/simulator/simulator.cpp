@@ -70,14 +70,16 @@ void simulate(unsigned int* const mem, int* const regs) {
     bool is_halted = false;
     int pc = 0;
     int safe_break_counter = 0;
-    int safe_break_ceil = 1000;
+    int safe_break_ceil = 5000;
 
     print_mem_state(mem);
     
     while (!is_halted && safe_break_counter < safe_break_ceil) {
         print_state(mem, regs, &pc);
 
-        interpret(mem, regs, &pc, &is_halted);
+        string s = interpret(mem, regs, &pc, &is_halted);
+
+        collect_result(s);
 
         regs[0] = 0;
 

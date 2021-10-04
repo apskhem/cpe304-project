@@ -1,10 +1,12 @@
 #include <stdexcept>
+#include <sstream>
 
 #include "instruction.cpp"
 
 using namespace std;
 
-void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halted) {
+string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halted) {
+    stringstream ss;
     unsigned int bin_instr = mem[*pc];
     Instruction instr(bin_instr);
 
@@ -19,6 +21,12 @@ void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halte
 
             regs[rd] = rs1_val + rs2_val;
 
+            ss
+            << "--" << endl
+            << "nextexec: " << "add @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", rd: " << rd
+            << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", result: " << regs[rd] << endl
+            << "--" << endl;
+
             *pc = *pc + 1;
             break;
         }
@@ -32,6 +40,12 @@ void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halte
 
             regs[rd] = ~(rs1_val & rs2_val);
 
+            ss
+            << "--" << endl
+            << "nextexec: " << "nand @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", rd: " << rd
+            << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", result: " << regs[rd] << endl
+            << "--" << endl;
+
             *pc = *pc + 1;
             break;
         }
@@ -43,6 +57,12 @@ void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halte
             int rs1_val = regs[rs1];
             
             regs[rs2] = mem[rs1_val + offset];
+
+            ss
+            << "--" << endl
+            << "nextexec: " << "lw @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
+            << ", rs1_val: " << rs1_val << ", written_val: " << regs[rs2] << endl
+            << "--" << endl;
 
             *pc = *pc + 1;
             break;
@@ -56,10 +76,16 @@ void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halte
 
             mem[rs1_val + offset] = regs[rs2];
 
+            ss
+            << "--" << endl
+            << "nextexec: " << "sw @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
+            << ", rs1_val: " << rs1_val << ", written_val: " << regs[rs2] << endl
+            << "--" << endl;
+
             *pc = *pc + 1;
             break;
         }
-        // beg (I-type)
+        // beq (I-type)
         case 0b100: {
             int rs1 = instr.rs1();
             int rs2 = instr.rs2();
@@ -72,6 +98,12 @@ void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halte
             if (rs1_val == rs2_val) {
                 *pc = *pc + offset;
             }
+
+            ss
+            << "--" << endl
+            << "nextexec: " << "beq @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
+            << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", is_jumped: " << (rs1_val == rs2_val ? "true" : "false") << endl
+            << "--" << endl;
 
             break;
         }
@@ -105,4 +137,8 @@ void interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_halte
             throw runtime_error("Error: unknown instruction opcode.");
         }
     }
+
+    cout << ss.str();
+
+    return ss.str();
 }
