@@ -38,7 +38,7 @@ void parse_file_buffer(unsigned int* mem, string in) {
 	}
 }
 
-char* load_memory(unsigned int* mem, string path) {
+void load_memory(unsigned int* mem, string path) {
     ifstream in_file(path, ios::binary);
 
     if (!in_file) {

@@ -1,2 +1,4 @@
 build
 .vscode
+result_log.txt
+src/**/main.exe
