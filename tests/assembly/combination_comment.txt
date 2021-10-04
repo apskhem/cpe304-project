@@ -3,7 +3,7 @@
         lw 0 6 plus1        // x6 = 1
         lw 0 7 neg1         // x7 = -1
         sw 5 1 address      // push n into stack
-        add 5 6 5		    // stack pointer + 1 (size + 1)
+        add 5 6 5	        // stack pointer + 1 (size + 1)
         sw 5 2 address      // push r into stack
 comb    beq 0 5 19          // if x5(stack pointer) == 0 ? goto noop : next instruction
         lw 5 2 address      // top r from stack
@@ -31,7 +31,7 @@ n .fill 4
 r .fill 2
 neg1 .fill -1
 plus1 .fill 1
-address .fill 34
+address .fill 0
 
 ===== register ======
 x0 = 0 (constant)

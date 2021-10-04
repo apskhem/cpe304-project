@@ -39,4 +39,4 @@ multi .fill mul
 round .fill 15
 check .fill 16384
 zero .fill 0
-address .fill 100
+address .fill 0
