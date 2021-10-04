@@ -6,7 +6,7 @@ using namespace std;
 
 void print_mem_state(unsigned int* const mem) {
     for (int i = 0; i < 65536U && mem[i]; i++) {
-        cout << "memory[ " << i << " ] " << mem[i] << endl;
+        cout << "memory[ " << i << " ] " << (int) mem[i] << endl;
     }
 }
 
@@ -18,13 +18,13 @@ void print_state(unsigned int* const mem, int* const regs, int* pc) {
     cout << "\tmemory:" << endl;
 
     for (int i = 0; i < 65536U && mem[i]; i++) {
-        cout << "\t\tmemory[ " << i << " ] " << mem[i] << endl;
+        cout << "\t\tmemory[ " << i << " ] " << (int) mem[i] << endl;
     }
 
     cout << "\tregisters:" << endl;
 
     for (int i = 0; i < 8; i++) {
-        cout << "\t\treg[ " << i << " ] " << regs[i] << endl;
+        cout << "\t\treg[ " << i << " ] " << (int) regs[i] << endl;
     }
 
     cout << "end state" << endl;
@@ -54,6 +54,9 @@ void simulate(unsigned int* const mem, int* const regs) {
         regs[0] = 0;
 
         safe_break_counter += 1;
+
+        string null;
+        cin >> null;
     }
 
     print_final_state(mem, regs, &pc, safe_break_counter);

@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
 	cout << full_str.size() << endl;
 
 	// write file in binary
-//	write_binary(full_str, "combination");
+	//	write_binary(full_str, "combination");
 	create_file(full_str, in_file_name);
 	
 	delete[] machineCode;
