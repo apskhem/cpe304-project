@@ -3,7 +3,6 @@
 
 using namespace std;
 
-string * output = nullptr;
 int lines = 0;
 
 string bitControlReg(string inputBit){
@@ -15,7 +14,7 @@ string bitControlReg(string inputBit){
 		i--;
 		j--;
 	}
-	return control;
+	return control.substr(0, 3);
 }
 
 string bitControlImm(string inputBit){
@@ -48,20 +47,20 @@ string rType(string inst, string regA = "000", string regB = "000", string destR
 string iType(string inst, string regA = "000", string regB = "000", string offset="0000000000000000" , int line = 0){
 	string mc = "0000000", lwOpcode = "010", swOpcode = "011", beqOpcode = "100";
 	
-	if(inst == "lw") mc = mc+lwOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
+	if (inst == "lw") mc = mc+lwOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
 	
-	else if(inst == "sw") mc = mc+swOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
+	else if (inst == "sw") mc = mc+swOpcode+bitControlReg(decToBin(regA))+bitControlReg(decToBin(regB))+bitControlImm(decToBin(offset));
 
 	else if(inst == "beq") {
-			if(!isNum(offset)){
-				stringstream offnum;
-				int des;
-				offnum<<offset.substr(1, offset.length() - 1);
-				offnum>>des;
-				des = des - 1 - line;				
-				offset = to_string(des);		
-			}
-			mc = mc + beqOpcode + bitControlReg(decToBin(regA)) + bitControlReg(decToBin(regB)) + bitControlImm(decToBin(offset));	
+		if(!isNum(offset)){
+			stringstream offnum;
+			int des;
+			offnum<<offset.substr(1, offset.length() - 1);
+			offnum>>des;
+			des = des - 1 - line;				
+			offset = to_string(des);		
+		}
+		mc = mc + beqOpcode + bitControlReg(decToBin(regA)) + bitControlReg(decToBin(regB)) + bitControlImm(decToBin(offset));
 	}
 	
 	return mc;
@@ -84,7 +83,7 @@ string oType(string inst){
 }
 
 char type(string inst, string label){
-	if(inst == "add") return 'r';
+	if (inst == "add") return 'r';
 	else if (inst == "nand") return 'r';
 	else if (inst == "lw") return 'i';
 	else if (inst == "sw") return 'i';
@@ -97,164 +96,167 @@ char type(string inst, string label){
 	else return 'a';
 }
 
-string *to_machine_code(string fileName){
+string to_machine_code(string fileName) {
 	stringstream ss;
-	string instLine;
+	string asmline;
 	string arg[6];
 	
-	ifstream inputFile(fileName);
+	ifstream infile(fileName);
 	
-	while(getline(inputFile,instLine)) lines = lines+1;
+	while (getline(infile, asmline)) lines += 1;
 	
-	inputFile.close();
+	infile.close();
 	
 	string* mc = new string[lines];
 	string* mem = new string[lines];
 
-	output = new string[lines];
-
-	for(int i = 0; i < lines;i++) mem[i] = "NT";
+	for (int i = 0; i < lines; i++) mem[i] = "NT";
 	
 	char instType[lines];
 	
-	inputFile.open(fileName);
+	infile.open(fileName);
 	
 	int j = 0;
 	
-	while(getline(inputFile, instLine)){
+	// load label into mem
+	while(getline(infile, asmline)) {
 		stringstream inputSs;
-		inputSs<<instLine;
-		inputSs>>arg[0]>>arg[1];
+		// split first two tokens
+		inputSs << asmline;
+		inputSs >> arg[0] >> arg[1];
 		
+		// get instruction type
 		instType[j] = type(arg[0], arg[1]);
 		
-		if(arg[1] == ".fill") mem[j] = arg[0];
+		// save label to mem
+		if (arg[1] == ".fill") mem[j] = arg[0];
 		
-		if(instType[j] == 'a') {
+		if (instType[j] == 'a') {
 			stringstream temp;
-			temp<<j;
-			temp>>mem[j];
-			mem[j] = arg[0] + ' ' + mem[j];
+			temp << j;
+			temp >> mem[j];
+			mem[j] = arg[0] + " " + mem[j];
 		}
 		
 		j++;
 	} 
-	inputFile.close();
+	infile.close();
 	
 	j = 0;
 	
-	inputFile.open(fileName);
-	while(getline(inputFile,instLine)){
+	infile.open(fileName);
+	while (getline(infile,asmline)){
 		stringstream input;
-		input<<instLine;
+		input << asmline;
 		
-		if(instType[j] == 'a'){
-			input>>arg[4]>>arg[0]>>arg[1]>>arg[2]>>arg[3];
+		if (instType[j] == 'a'){
+			input >> arg[4] >> arg[0] >> arg[1] >> arg[2] >> arg[3];
 			instType[j] = type(arg[0], arg[1]);
 		}
-		else input>>arg[0]>>arg[1]>>arg[2]>>arg[3];
+		else input >> arg[0] >> arg[1] >> arg[2] >> arg[3];
 		
-		switch(instType[j]){
-			
-			case 'r':   
-						for(int k = 1; k < 4;k++){
-							if(!isNum(arg[k])) {
-								for(int i = 0; i < lines; i++){
-									if(arg[k] == mem[i]){
-										stringstream num;
-										num<<i;
-										num>>arg[k];
-										break;
-									}		
-								}
+		switch(instType[j]) {
+			case 'r': {
+				for(int k = 1; k < 4;k++){
+					if(!isNum(arg[k])) {
+						for(int i = 0; i < lines; i++){
+							if(arg[k] == mem[i]){
+								stringstream num;
+								num<<i;
+								num>>arg[k];
+								break;
+							}		
+						}
+					}
+				}
+				mc[j] = rType(arg[0], arg[1], arg[2], arg[3]);
+				break;
+			}
+			case 'i': {
+				for(int k = 1; k < 4;k++){
+					if(!isNum(arg[k])) {
+						for(int i = 0; i < lines; i++){
+							if(arg[k] == mem[i]){
+								stringstream num;
+								num<<i;
+								num>>arg[k];
+								break;
 							}
+							stringstream addr;
+							string pos = "", name = "";
+							addr<<mem[i];
+							addr>>name>>pos;
+							if(arg[k] == name){
+								arg[k] = 'a' + pos;
+							//	cout<<arg[k]<<endl<<pos<<endl<<k<<endl;
+								break;
+							}		
 						}
-						mc[j] = rType(arg[0], arg[1], arg[2], arg[3]);
-						break;
-		
-			case 'i':	
-						for(int k = 1; k < 4;k++){
-							if(!isNum(arg[k])) {
-								for(int i = 0; i < lines; i++){
-									if(arg[k] == mem[i]){
-										stringstream num;
-										num<<i;
-										num>>arg[k];
-										break;
-									}
-									stringstream addr;
-									string pos = "", name = "";
-									addr<<mem[i];
-									addr>>name>>pos;
-									if(arg[k] == name){
-										arg[k] = 'a' + pos;
-									//	cout<<arg[k]<<endl<<pos<<endl<<k<<endl;
-										break;
-									}		
-								}
-							}
+					}
+				}
+				
+				mc[j] = iType(arg[0], arg[1], arg[2], arg[3], j);
+				break;
+			}
+			case 'j': {
+				for(int k = 1; k < 3;k++){
+					if(!isNum(arg[k])) {
+						for(int i = 0; i < lines; i++){
+							if(arg[k] == mem[i]){
+								stringstream num;
+								num<<i;
+								num>>arg[k];
+								break;
+							}		
 						}
-						
-						mc[j] = iType(arg[0], arg[1], arg[2], arg[3], j);
-						break;
-						
-			case 'j': 	
-						for(int k = 1; k < 3;k++){
-							if(!isNum(arg[k])) {
-								for(int i = 0; i < lines; i++){
-									if(arg[k] == mem[i]){
-										stringstream num;
-										num<<i;
-										num>>arg[k];
-										break;
-									}		
-								}
-							}
+					}
+				}
+				mc[j] = jType(arg[0], arg[1], arg[2]);
+				break;
+			}				
+			case 'o': {
+				if(arg[1] == "halt") mc[j] = oType(arg[1]);
+				else mc[j] = oType(arg[0]);
+				break;	
+			}				
+			case 'f': {
+				if(!isNum(arg[2])) {
+					for(int i = 0; i < lines; i++){
+						if(arg[2] == mem[i]){
+							stringstream num;
+							num<<i;
+							num>>arg[2];
+							break;
 						}
-						mc[j] = jType(arg[0], arg[1], arg[2]);
-						break;				
-			case 'o':
-						if(arg[1] == "halt") mc[j] = oType(arg[1]);
-						else mc[j] = oType(arg[0]);
-						break;					
-			case 'f':	
-						if(!isNum(arg[2])) {
-								for(int i = 0; i < lines; i++){
-									if(arg[2] == mem[i]){
-										stringstream num;
-										num<<i;
-										num>>arg[2];
-										break;
-									}
-									stringstream addr;
-									string pos = "", name = "";
-									addr<<mem[i];
-									addr>>name>>pos;
-									if(arg[2] == name){
-										arg[2] = pos;
-										break;
-									}		
-									
-								}
+						stringstream addr;
+						string pos = "", name = "";
+						addr<<mem[i];
+						addr>>name>>pos;
+						if(arg[2] == name){
+							arg[2] = pos;
+							break;
 						}
-						mc[j] = bitControlImm(decToBin(arg[2]));
-						if(mc[j][0] == '1'){
-							mc[j] = "1111111111111111" + mc[j];
-						}
-						else mc[j] = "0000000000000000" + mc[j];
-						break;														
+					}
+				}
+				mc[j] = bitControlImm(decToBin(arg[2]));
+				if(mc[j][0] == '1'){
+					mc[j] = "1111111111111111" + mc[j];
+				}
+				else mc[j] = "0000000000000000" + mc[j];
+				break;	
+			}													
 		}
 		j++;
 	}
+
+	string full_str = "";
 	
-	for(int i = 0; i < lines; i++){
-		output[i] = mc[i];
-	}
+	for (int i = 0; i < lines; i++) full_str += mc[i];
 
 	delete[] mc;
 	delete[] mem;
 	
-	return output;
+	return full_str;
 }
 
 
