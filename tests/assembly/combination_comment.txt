@@ -1,45 +1,45 @@
-        lw 0 1 n                // x1 = n
-        lw 0 2 r                // x2 = r
-        lw 0 6 plus1            // x6 = 1
-        lw 0 7 neg1             // x7 = -1
-        sw 5 1 address          // push n into stack
-        add 5 6 5               // stack pointer + 1 (size + 1)
-        sw 5 2 address          // push r into stack
-comb    beq 7 5 20              // if x5(stack pointer) == 0 ? goto noop : next instruction
-        lw 5 2 address          // top r from stack
-        sw 5 0 address          // pop from stack
-        add 5 7 5	        // stack pointer - 1 (size - 1)
-        lw 5 1 address          // top n from stack
-        sw 5 0 address          // pop from stack
-        beq 1 2 yes             // if n == r ? goto yes : next instruction
-        beq 0 2 yes             // if r == 0 ? goto yes : next instruction
-        add 1 7 1               // n = n - 1
-        sw 5 1 address          // push n into stack
-        add 5 6 5               // stack pointer + 1 (size + 1)
-        sw 5 2 address          // push r into stack
-        add 2 7 2               // r = r - 1
-        add 5 6 5               // stack pointer + 1 (size + 1)
-        sw 5 1 address          // push n into stack
-        add 5 6 5               // stack pointer + 1 (size + 1)
-        sw 5 2 address          // push r into stack
-        beq 0 0 comb            // go back to comb
-yes     add 3 6 3               // answer += 1
-        add 5 7 5               /////
-        beq 0 0 comb            // go back to comb
+        lw      0       1       n               // x1 = n
+        lw      0       2       r               // x2 = r
+        lw      0       6       plus1           // x6 = 1
+        lw      0       7       neg1            // x7 = -1
+        sw      5       1       address         // push n into stack
+        add     5       6       5               // stack pointer + 1 (size + 1)
+        sw      5       2       address         // push r into stack
+comb    beq     7       5       20              // if x5(stack pointer) == 0 ? goto noop : next instruction
+        lw      5       2       address         // top r from stack
+        sw      5       0       address         // pop from stack
+        add     5       7       5	        // stack pointer - 1 (size - 1)
+        lw      5       1       address         // top n from stack
+        sw      5       0       address         // pop from stack
+        beq     1       2       yes             // if n == r ? goto yes : next instruction
+        beq     0       2       yes             // if r == 0 ? goto yes : next instruction
+        add     1       7       1               // n = n - 1
+        sw      5       1       address         // push n into stack
+        add     5       6       5               // stack pointer + 1 (size + 1)
+        sw      5       2       address         // push r into stack
+        add     2       7       2               // r = r - 1
+        add     5       6       5               // stack pointer + 1 (size + 1)
+        sw      5       1       address         // push n into stack
+        add     5       6       5               // stack pointer + 1 (size + 1)
+        sw      5       2       address         // push r into stack
+        beq     0       0       comb            // go back to comb
+yes     add     3       6       3               // answer += 1
+        add     5       7       5               /////
+        beq     0       0       comb            // go back to comb
         noop 
 done    halt
-n .fill 4
-r .fill 2
-neg1 .fill -1
-plus1 .fill 1
-address .fill 0
+n       .fill   4
+r       .fill   2
+neg1    .fill   -1
+plus1   .fill   1
+address .fill   0
 
-===== register ======
-x0 = 0 (constant)
-x1 = n
-x2 = r
-x3 = return value
-x4 = local variable
-x5 = stack pointer
-x6 = temp
-x7 = return address
+// ===== register ======
+// x0 = 0 (constant)
+// x1 = n
+// x2 = r
+// x3 = return value
+// x4 = local variable
+// x5 = stack pointer
+// x6 = temp
+// x7 = return address

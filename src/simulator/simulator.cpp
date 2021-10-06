@@ -20,7 +20,7 @@ void create_log_file() {
 
 void print_mem_state(unsigned int* const mem) {
     stringstream ss;
-    for (int i = 0; i < 65536U && mem[i]; i++) {
+    for (int i = 0; i < 65536U && (mem[i] || mem[i + 1]); i++) {
         ss << "memory[ " << i << " ] " << (int) mem[i] << endl;
     }
     
@@ -37,7 +37,7 @@ void print_state(unsigned int* const mem, int* const regs, int* pc) {
     ss << "\tpc " << *pc << endl;
     ss << "\tmemory:" << endl;
 
-    for (int i = 0; i < 65536U && mem[i]; i++) {
+    for (int i = 0; i < 65536U && (mem[i] || mem[i + 1]); i++) {
         ss << "\t\tmemory[ " << i << " ] " << (int) mem[i] << endl;
     }
 
