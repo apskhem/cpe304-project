@@ -25,17 +25,16 @@ int main(int argc, char* argv[]) {
 
 	string infile = argv[1];
 
+	int beginIdx = infile.rfind('/');
+	string filename = infile.substr(beginIdx + 1);
+	int dotIdx = filename.find('.');
+	string name = filename.substr(0, dotIdx);
+
 	// transform string
 	string bin_str = to_machine_code(infile);
 
 	// cout << bin_str << endl;
 
 	// write file in binary
-	if (argc < 4) {
-		create_file(bin_str, "tests/machine/out.txt");
-	}
-	else {
-		string outfile = argv[3];
-		create_file(bin_str, outfile);
-	}
+	create_file(bin_str, "tests/machine/" + name + ".out.txt");
 }
