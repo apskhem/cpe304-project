@@ -89,8 +89,8 @@ char type(string inst, string label){
 	else if (inst == "sw") return 'i';
 	else if (inst == "beq") return 'i';
 	else if (inst == "jalr") return 'j';
-	else if (inst == "done") return 'o';
 	else if (inst == "noop") return 'o';
+	else if (inst == "halt") return 'o';
 	else if (label == ".fill") return 'f';
 	
 	else return 'a';
@@ -215,7 +215,7 @@ string to_machine_code(string fileName) {
 				break;
 			}				
 			case 'o': {
-				if(arg[1] == "halt") mc[j] = oType(arg[1]);
+				if(arg[0] == "halt") mc[j] = oType(arg[0]);
 				else mc[j] = oType(arg[0]);
 				break;	
 			}				
