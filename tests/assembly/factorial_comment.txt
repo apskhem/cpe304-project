@@ -1,42 +1,60 @@
-lw 0 7 neg1
-lw 0 4 x
-lw 0 6 one
-lw 0 1 address
-lw 0 2 one				//default answer is 1
-loop beq 0 4 fact		
-sw 1 4 address			//push x to stack
-add 4 7 4				//x -= 1
-add 1 6 1				//move pointer to null (address+=1)
-beq 0 0 loop			
-fact beq 0 1 done
-lw 0 7 neg1		
-add 1 7 1				// (address -= 1) move to tail
-lw 1 4 address			//load tail to reg4
-lw 0 6 multi			//load multi address
-jalr 6 5				//goto multi
-sw 1 7 address
-lw 1 2 address
-sw 1 0 address
-beq 0 0 fact			//back to fact
-mul lw 0 3 round		//15 round
-lw 0 7 zero
-beq 0 3 mulply			//loop multiply
-add 7 7 7
-lw 0 6 check
-nand 4 6 4
-nand 4 4 4
-beq 0 4 1
-add 7 2 7
-add 4 4 4
-beq 0 0 mul
-mulply jalr 5 6
-noop
-done halt
-x .fill 5
-neg1 .fill -1
-one .fill 1
-multi .fill mul
-round .fill 15
-check .fill 16384
-zero .fill 0
+        lw 0 7 neg1             // x7 = -1
+        lw 0 4 x                // x4 = x(input)
+        lw 0 6 one              // x6 = 1
+        lw 0 1 address          // x1 = stack pointer
+        lw 0 2 one		        // x2 (answer) = 1
+
+        // add number to stack
+loop    beq 0 4 fact		    // if(x == 0) goto fact : next instruction
+        sw 1 4 address	        // push x into stack
+        add 4 7 4		        // x -= 1
+        add 1 6 1		        // (x1) stack pointer + 1 (size + 1)
+        beq 0 0 loop	        // go back to loop
+
+        // evaluate
+fact    beq 0 1 done            // if (stack pointer == 0) goto done : next instruction
+        lw 0 7 neg1		        // x7 = -1  [for what??]
+        add 1 7 1		        // stack pointer - 1 (size - 1)
+        lw 1 4 address		    // top x
+        lw 0 6 multi		    // x6 = mul
+        jalr 6 5		        // jump to mul(x6) and x5 = return address
+        sw 1 7 address          // push -1 into stack
+        lw 1 2 address          // top from stack to x2
+        sw 1 0 address          // pop from stack
+        beq 0 0 fact	        // go back to fact
+
+        // multiplication
+mul     lw 0 3 round            // x3 = round
+        lw 0 7 zero             // x7 = 0
+        beq 0 3 mulply	        // if (round == 0) goto multiply : next instruction
+        add 7 7 7
+        lw 0 6 check
+        nand 4 6 4
+        nand 4 4 4
+        beq 0 4 1
+        add 7 2 7
+        add 4 4 4
+        beq 0 0 mul
+
+mulply  jalr 5 6                // jump to return address (x5)       
+
+        noop
+done    halt
+x       .fill 5
+neg1    .fill -1
+one     .fill 1
+multi   .fill mul
+round   .fill 15
+check   .fill 16384
+zero    .fill 0
 address .fill 0
+
+===== register ======
+x0 = 0 (constant)
+x1 = stack pointer
+x2 = return value
+x3 = return address
+x4 = local variable
+x5 = temp
+x6 = n
+x7 = r
