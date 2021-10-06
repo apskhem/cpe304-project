@@ -2,59 +2,68 @@
         lw 0 4 x                // x4 = x(input)
         lw 0 6 one              // x6 = 1
         lw 0 1 address          // x1 = stack pointer
-        lw 0 2 one		        // x2 (answer) = 1
+        lw 0 2 one                // x2 (answer) = 1
 
-        // add number to stack
-loop    beq 0 4 fact		    // if(x == 0) goto fact : next instruction
-        sw 1 4 address	        // push x into stack
-        add 4 7 4		        // x -= 1
-        add 1 6 1		        // (x1) stack pointer + 1 (size + 1)
-        beq 0 0 loop	        // go back to loop
+        // push number to stack
+loop    beq 6 4 fact            // if(x == 1) goto fact : next instruction
+        sw 1 4 address            // push x into stack
+        add 4 7 4                // x -= 1
+        add 1 6 1                // (x1) stack pointer + 1 (size + 1)
+        beq 0 0 loop            // go back to loop
 
         // evaluate
 fact    beq 0 1 done            // if (stack pointer == 0) goto done : next instruction
-        lw 0 7 neg1		        // x7 = -1  [for what??]
-        add 1 7 1		        // stack pointer - 1 (size - 1)
-        lw 1 4 address		    // top x
-        lw 0 6 multi		    // x6 = mul
-        jalr 6 5		        // jump to mul(x6) and x5 = return address
-        sw 1 7 address          // push -1 into stack
-        lw 1 2 address          // top from stack to x2
+        add 1 7 1                // stack pointer - 1 (size - 1)
+        lw 1 4 address            // top x to x4
         sw 1 0 address          // pop from stack
-        beq 0 0 fact	        // go back to fact
+        lw 0 6 multi            // x6 = mul
+        jalr 6 5                // jump to mul(x6) and x5 = return address
+        beq 0 0 fact            // go back to fact
 
-        // multiplication
-mul     lw 0 3 round            // x3 = round
-        lw 0 7 zero             // x7 = 0
-        beq 0 3 mulply	        // if (round == 0) goto multiply : next instruction
-        add 7 7 7
-        lw 0 6 check
-        nand 4 6 4
-        nand 4 4 4
-        beq 0 4 1
-        add 7 2 7
-        add 4 4 4
-        beq 0 0 mul
+        //multiplication
+mul     lw 0 3 one                   // x3 = 1
+        sw 1 5 address               // push return address to stack
+        add 1 3 1                       // stack pointer + 1
+        lw 0 3 round            // x3 = round
+        lw 0 7 zero                // x7 = 0 => answer(this mul)
+        lw 0 6 check                // x6 = check
+mul1    beq 0 3 mulply            // if round == 0 ? goto multiply : next instruction
+        sw 1 3 address            // push round into stack
+        add 7 7 7               // answer += answer           
+        nand 2 6 3               // mcand && 16384
+        nand 3 3 3
+        beq 0 3 1               // if overflow : next instruction : skip 1 instruction
+        add 7 4 7               // answer += mplier
+        add 2 2 2               // mcand += mcand
+        lw 1 3 address           // top round to x3
+        sw 1 0 address          // pop from stack
+        lw 0 5 neg1             // x5 = -1
+        add 3 5 3               // round -=1
+        beq 0 0 mul1            
 
-mulply  jalr 5 6                // jump to return address (x5)       
-
+        // set return argument
+mulply  add 0 7 2                // real answer = this round answer
+        lw 0 7 neg1             // x7 = -1
+        add 1 7 1               // stack pointer - 1
+        lw 1 5 address          // x5 = return address
+        jalr 5 6                // jump to return address (x5)       
         noop
 done    halt
-x       .fill 5
+
+x       .fill 9
 neg1    .fill -1
+zero    .fill 0
 one     .fill 1
 multi   .fill mul
 round   .fill 15
 check   .fill 16384
-zero    .fill 0
 address .fill 0
 
 ===== register ======
 x0 = 0 (constant)
 x1 = stack pointer
-x2 = return value
-x3 = return address
-x4 = local variable
-x5 = temp
-x6 = n
-x7 = r
+x2 = return value, answer
+x3 = temp
+x4 = x (input)
+x5 = return address
+x6 = temp
