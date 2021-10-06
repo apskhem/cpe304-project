@@ -5,7 +5,7 @@ lw 0 7 neg1
 sw 5 1 address
 add 5 6 5
 sw 5 2 address 
-comb beq 0 5 20
+comb beq 7 5 20
 lw 5 2 address
 sw 5 0 address
 add 5 7 5
