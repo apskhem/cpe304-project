@@ -11,7 +11,7 @@ string bitControlReg(string inputBit){
 	int temp = 0;
 	test<<dec;
 	test>>temp;
-	if(temp > 7 && temp <= 0) throw runtime_error("invalid register T_T");
+	if(temp > 7 || temp <= 0) throw runtime_error("invalid register T_T");
 	string control = "000";
 	int i = control.length()-1;
 	int j = inputBit.length()-1;
@@ -29,7 +29,7 @@ string bitControlImm(string inputBit){
 	int temp = 0;
 	test<<dec;
 	test>>temp;
-	if(temp >= -32768 && temp <= 32767) throw runtime_error("invalid register immediate");
+	if(temp < -32768 || temp > 32767) throw runtime_error("invalid register immediate");
 	string control = "0000000000000000";
 	if(inputBit[0] == '1')
 	control = "1111111111111111";
