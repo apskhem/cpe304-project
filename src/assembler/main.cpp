@@ -19,10 +19,8 @@ void create_file(string data, string path){
 // 48 to 57 char(0 to 9)
 int main(int argc, char* argv[]) {
 	// check for input file argument
-	if (argc < 2) {
-		throw runtime_error("need a source file to be executed.");
-	}
-
+	if (argc < 2) throw runtime_error("need a source file to be executed.");
+	
 	string infile = argv[1];
 
 	int beginIdx = infile.rfind('/');
@@ -37,4 +35,7 @@ int main(int argc, char* argv[]) {
 
 	// write file in binary
 	create_file(bin_str, "tests/machine/" + name + ".out.txt");
+	
+	return 0;
+	
 }

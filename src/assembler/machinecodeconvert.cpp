@@ -6,6 +6,12 @@ using namespace std;
 int lines = 0;
 
 string bitControlReg(string inputBit){
+	string dec = binToDec(inputBit);
+	stringstream test;
+	int temp = 0;
+	test<<dec;
+	test>>temp;
+	if(temp > 7 && temp <= 0) throw runtime_error("invalid register T_T");
 	string control = "000";
 	int i = control.length()-1;
 	int j = inputBit.length()-1;
@@ -18,6 +24,12 @@ string bitControlReg(string inputBit){
 }
 
 string bitControlImm(string inputBit){
+	string dec = binToDec(inputBit);
+	stringstream test;
+	int temp = 0;
+	test<<dec;
+	test>>temp;
+	if(temp >= -32768 && temp <= 32767) throw runtime_error("invalid register immediate");
 	string control = "0000000000000000";
 	if(inputBit[0] == '1')
 	control = "1111111111111111";
@@ -188,7 +200,6 @@ string to_machine_code(string fileName) {
 							addr>>name>>pos;
 							if(arg[k] == name){
 								arg[k] = 'a' + pos;
-							//	cout<<arg[k]<<endl<<pos<<endl<<k<<endl;
 								break;
 							}		
 						}
