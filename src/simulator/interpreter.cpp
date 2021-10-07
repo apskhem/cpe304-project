@@ -22,11 +22,11 @@ string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_hal
 
             regs[rd] = rs1_val + rs2_val;
 
-            ss
-            << "--" << endl
-            << "nextexec: " << "add @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", rd: " << rd
-            << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", result: " << regs[rd] << endl
-            << "--" << endl;
+            // ss
+            // << "--" << endl
+            // << "nextexec: " << "add @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", rd: " << rd
+            // << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", result: " << regs[rd] << endl
+            // << "--" << endl;
 
             *pc = *pc + 1;
             break;
@@ -41,11 +41,11 @@ string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_hal
 
             regs[rd] = ~(rs1_val & rs2_val);
 
-            ss
-            << "--" << endl
-            << "nextexec: " << "nand @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", rd: " << rd
-            << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", result: " << regs[rd] << endl
-            << "--" << endl;
+            // ss
+            // << "--" << endl
+            // << "nextexec: " << "nand @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", rd: " << rd
+            // << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", result: " << regs[rd] << endl
+            // << "--" << endl;
 
             *pc = *pc + 1;
             break;
@@ -59,11 +59,11 @@ string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_hal
             
             regs[rs2] = mem[rs1_val + offset];
 
-            ss
-            << "--" << endl
-            << "nextexec: " << "lw @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
-            << ", rs1_val: " << rs1_val << ", written_val: " << regs[rs2] << endl
-            << "--" << endl;
+            // ss
+            // << "--" << endl
+            // << "nextexec: " << "lw @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
+            // << ", rs1_val: " << rs1_val << ", written_val: " << regs[rs2] << endl
+            // << "--" << endl;
 
             *pc = *pc + 1;
             break;
@@ -77,11 +77,11 @@ string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_hal
 
             mem[rs1_val + offset] = regs[rs2];
 
-            ss
-            << "--" << endl
-            << "nextexec: " << "sw @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
-            << ", rs1_val: " << rs1_val << ", written_val: " << regs[rs2] << endl
-            << "--" << endl;
+            // ss
+            // << "--" << endl
+            // << "nextexec: " << "sw @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
+            // << ", rs1_val: " << rs1_val << ", written_val: " << regs[rs2] << endl
+            // << "--" << endl;
 
             *pc = *pc + 1;
             break;
@@ -100,11 +100,11 @@ string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_hal
                 *pc = *pc + offset;
             }
 
-            ss
-            << "--" << endl
-            << "nextexec: " << "beq @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
-            << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", is_jumped: " << (rs1_val == rs2_val ? "true" : "false") << endl
-            << "--" << endl;
+            // ss
+            // << "--" << endl
+            // << "nextexec: " << "beq @ " << "rs1: " << rs1 << ", rs2: " << rs2 << ", offset: " << offset
+            // << ", rs1_val: " << rs1_val << ", rs2_val: " << rs2_val << ", is_jumped: " << (rs1_val == rs2_val ? "true" : "false") << endl
+            // << "--" << endl;
 
             break;
         }
@@ -120,11 +120,11 @@ string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_hal
             // perform jump
             *pc = rs1_val;
 
-            ss
-            << "--" << endl
-            << "nextexec: " << "jalr @ " << "rs1: " << rs1 << ", rs2: " << rs2
-            << ", rs1_val: " << rs1_val << endl
-            << "--" << endl;
+            // ss
+            // << "--" << endl
+            // << "nextexec: " << "jalr @ " << "rs1: " << rs1 << ", rs2: " << rs2
+            // << ", return address: " << regs[rs2] << ", destination: " << rs1_val << endl
+            // << "--" << endl;
 
             break;
         }

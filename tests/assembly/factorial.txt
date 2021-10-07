@@ -3,15 +3,11 @@
         lw 0 6 one              // x6 = 1
         lw 0 1 address          // x1 = stack pointer
         lw 0 2 one                // x2 (answer) = 1
-
-        // push number to stack
 loop    beq 6 4 fact            // if(x == 1) goto fact : next instruction
         sw 1 4 address            // push x into stack
         add 4 7 4                // x -= 1
         add 1 6 1                // (x1) stack pointer + 1 (size + 1)
         beq 0 0 loop            // go back to loop
-
-        // evaluate
 fact    beq 0 1 done            // if (stack pointer == 0) goto done : next instruction
         add 1 7 1                // stack pointer - 1 (size - 1)
         lw 1 4 address            // top x to x4
@@ -19,8 +15,6 @@ fact    beq 0 1 done            // if (stack pointer == 0) goto done : next inst
         lw 0 6 multi            // x6 = mul
         jalr 6 5                // jump to mul(x6) and x5 = return address
         beq 0 0 fact            // go back to fact
-
-        //multiplication
 mul     lw 0 3 one                   // x3 = 1
         sw 1 5 address               // push return address to stack
         add 1 3 1                       // stack pointer + 1
@@ -40,8 +34,6 @@ mul1    beq 0 3 mulply            // if round == 0 ? goto multiply : next instru
         lw 0 5 neg1             // x5 = -1
         add 3 5 3               // round -=1
         beq 0 0 mul1            
-
-        // set return argument
 mulply  add 0 7 2                // real answer = this round answer
         lw 0 7 neg1             // x7 = -1
         add 1 7 1               // stack pointer - 1
@@ -49,7 +41,6 @@ mulply  add 0 7 2                // real answer = this round answer
         jalr 5 6                // jump to return address (x5)       
         noop
 done    halt
-
 x       .fill 9
 neg1    .fill -1
 zero    .fill 0
@@ -58,12 +49,3 @@ multi   .fill mul
 round   .fill 15
 check   .fill 16384
 address .fill 0
-
-===== register ======
-x0 = 0 (constant)
-x1 = stack pointer
-x2 = return value, answer
-x3 = temp
-x4 = x (input)
-x5 = return address
-x6 = temp

@@ -70,7 +70,7 @@ void simulate(unsigned int* const mem, int* const regs) {
     bool is_halted = false;
     int pc = 0;
     int safe_break_counter = 0;
-    int safe_break_ceil = 5000;
+    int safe_break_ceil = 20000;
 
     print_mem_state(mem);
     
