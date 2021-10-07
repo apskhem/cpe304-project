@@ -1,5 +1,6 @@
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
 
 #include "instruction.cpp"
 
@@ -118,6 +119,12 @@ string interpret(unsigned int* const mem, int* const regs, int* pc, bool* is_hal
 
             // perform jump
             *pc = rs1_val;
+
+            ss
+            << "--" << endl
+            << "nextexec: " << "jalr @ " << "rs1: " << rs1 << ", rs2: " << rs2
+            << ", rs1_val: " << rs1_val << endl
+            << "--" << endl;
 
             break;
         }
