@@ -16,6 +16,6 @@ loop    beq     0       4       8
 done    halt
 round   .fill   15
 check   .fill   16384
-mcand   .fill   9000
-mplier  .fill   8561
+mcand   .fill   9
+mplier  .fill   40320
 neg1    .fill   -1

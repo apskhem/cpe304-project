@@ -1,24 +1,23 @@
-
-        lw      0       4       round           // x4 = round
-        lw      0       2       mcand           // x2 = mcand
-        lw      0       3       mplier          // x3 = mplier
-        lw      0       5       check           // x5 = check
-        lw      0       6       neg1            // x6 = -1
-loop    beq     0       4       8               // if x4 == 0 ? go noop : next instrunction
-        add     1       1       1               // return += return
-        nand    2       5       7               // mcand & 16384 (using nand)
-        nand    7       7       7               // mcand & 16384
-        beq     0       7       1               // if & result is false skip 1 line
-        add     1       3       1               // result += mplier
-        add     2       2       2               // mcand *=2
-        add     4       6       4               // round -=1
-        beq     0       0       loop            // back to loop
+        lw    0  4  round   // x4 = round
+        lw    0  2  mcand   // x2 = mcand
+        lw    0  3  mplier  // x3 = mplier
+        lw    0  5  check   // x5 = check
+        lw    0  6  neg1    // x6 = -1
+loop    beq   0  4  8       // if x4 == 0 ? go noop : next instrunction
+        add   1  1  1       // return += return
+        nand  2  5  7       // mcand & 16384 (using nand)
+        nand  7  7  7       // mcand & 16384
+        beq   0  7  1       // if & result is false skip 1 line
+        add   1  3  1       // result += mplier
+        add   2  2  2       // mcand *=2
+        add   4  6  4       // round -=1
+        beq   0  0  loop    // back to loop
         noop
-done    halt                                    // end
-round   .fill   15                              // 15 times fixed
-check   .fill   16384                           // 2^14 for something
-mcand   .fill   32456                           // input
-mplier  .fill   315                             // input
+done    halt                
+round   .fill   15          // 15 times fixed
+check   .fill   16384       // check overflow
+mcand   .fill   32456       // input
+mplier  .fill   315         // input
 neg1    .fill   -1
 
  ===== register ======
