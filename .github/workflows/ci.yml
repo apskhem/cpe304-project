@@ -1,0 +1,23 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: install g++
+      run: brew install gcc
+    - name: check g++ version
+      run: g++ --version
+    - name: build assembler
+      run: sh ./project.sh build assembler
+    - name: build simulator
+      run: sh ./project.sh build simulator
