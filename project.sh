@@ -7,6 +7,7 @@ elif [ "$1" == "run" ]
 then
     if [ "$2" == "simulator" -o "$2" == "assembler" ]
     then
+        mkdir -p build
         g++ src/$2/main.cpp -o build/$2 && ./build/$2 ${@:3}
     else
         echo "Invalid mode argument."
@@ -15,6 +16,7 @@ elif [ "$1" == "build" ]
 then
     if [ "$2" == "simulator" -o "$2" == "assembler" ]
     then
+        mkdir -p build
         g++ src/$2/main.cpp -o build/$2
     else
         echo "Invalid mode argument."
