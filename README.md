@@ -1,3 +1,10 @@
+# CPE 304: Computer Architecture
+
+<p>
+<img src="https://img.shields.io/badge/written_in-C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white" alt="badge" />
+<img src="https://img.shields.io/badge/build-pass-success?style=for-the-badge" alt="badge" />
+</p>
+
 Due date: 8th Oct. 2021
 Presentation date: 13:30, 9th Oct. 2021
 
