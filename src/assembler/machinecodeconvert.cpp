@@ -160,12 +160,10 @@ string to_machine_code(string fileName) {
 			temp >> mem[j];
 			
 			for(int i = 0; i < lines;i++){
-				if(mem[i] == arg[0] + " " + mem[j])
+				if(mem[i] == arg[0] + " " + mem[i])
 					throw runtime_error("Duplicate Label");
 			}
-			mem[j] = arg[0] + " " + mem[j];
-			
-			
+			mem[j] = arg[0] + " " + mem[j];	
 		}
 		
 		
