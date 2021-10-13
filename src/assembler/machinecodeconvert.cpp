@@ -134,8 +134,6 @@ string to_machine_code(string fileName) {
 	infile.open(fileName);
 	
 	int j = 0;
-	int g = 0;
-	int q = 0;
 	
 	// load label into mem
 	while(getline(infile, asmline)) {
@@ -149,11 +147,11 @@ string to_machine_code(string fileName) {
 		
 		// save label to mem
 		if (arg[1] == ".fill"){
-			for(int i = 0; i < g;i++){
-				if(mem[i] = arg[0]) throw runtime_error("Duplicate .fill");
+			for(int i = 0; i < lines;i++){
+				if(mem[i] == arg[0]) throw runtime_error("Duplicate .fill");
 			}
 			mem[j] = arg[0];
-			g++;
+		
 		} 
 		
 		if (instType[j] == 'a') {
@@ -161,12 +159,12 @@ string to_machine_code(string fileName) {
 			temp << j;
 			temp >> mem[j];
 			
-			for(int i = 0; i < g;i++){
+			for(int i = 0; i < lines;i++){
 				if(mem[i] == arg[0] + " " + mem[j])
 					throw runtime_error("Duplicate Label");
 			}
 			mem[j] = arg[0] + " " + mem[j];
-			g++;
+			
 			
 		}
 		
