@@ -28,8 +28,8 @@ yes     add   3   6   3         // answer += 1
         beq   0   0   comb      // go back to comb
         noop 
 done    halt
-n       .fill   10
-r       .fill   5
+n       .fill   7
+r       .fill   3
 neg1    .fill   -1
 plus1   .fill   1
 address .fill   0
