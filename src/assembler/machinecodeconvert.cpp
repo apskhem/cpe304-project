@@ -183,7 +183,7 @@ string to_machine_code(string fileName) {
 								num>>arg[k];
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Label");	
+							if(i == lines - 1)	throw runtime_error("invalid Argumen");	
 						}
 						
 					}
@@ -209,7 +209,7 @@ string to_machine_code(string fileName) {
 								arg[k] = 'a' + pos;
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Label");		
+							if(i == lines - 1)	throw runtime_error("invalid Argumen");		
 						}
 					}
 				}
@@ -227,7 +227,7 @@ string to_machine_code(string fileName) {
 								num>>arg[k];
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Label");		
+							if(i == lines - 1)	throw runtime_error("invalid Argumen");		
 						}
 					}
 				}
@@ -256,7 +256,7 @@ string to_machine_code(string fileName) {
 							arg[2] = pos;
 							break;
 						}
-						if(i == lines - 1)	throw runtime_error("invalid Label");
+						if(i == lines - 1)	throw runtime_error("invalid Argumen");
 					}
 				}
 				mc[j] = bitControlImm(decToBin(arg[2]));
