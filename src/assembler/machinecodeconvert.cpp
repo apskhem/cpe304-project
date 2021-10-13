@@ -172,6 +172,9 @@ string to_machine_code(string fileName) {
 		}
 		else input >> arg[0] >> arg[1] >> arg[2] >> arg[3];
 		
+		if(type(arg[0], arg[1]) == 'a' || type(arg[0], arg[1]) == 'f') 
+			throw runtime_error("invalid Instruction Command");
+		
 		switch(instType[j]) {
 			case 'r': {
 				for(int k = 1; k < 4;k++){
@@ -183,7 +186,7 @@ string to_machine_code(string fileName) {
 								num>>arg[k];
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Argumen");	
+							if(i == lines - 1)	throw runtime_error("invalid Argument");	
 						}
 						
 					}
@@ -209,7 +212,7 @@ string to_machine_code(string fileName) {
 								arg[k] = 'a' + pos;
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Argumen");		
+							if(i == lines - 1)	throw runtime_error("invalid Argument");		
 						}
 					}
 				}
@@ -227,7 +230,7 @@ string to_machine_code(string fileName) {
 								num>>arg[k];
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Argumen");		
+							if(i == lines - 1)	throw runtime_error("invalid Argument");		
 						}
 					}
 				}
@@ -256,7 +259,7 @@ string to_machine_code(string fileName) {
 							arg[2] = pos;
 							break;
 						}
-						if(i == lines - 1)	throw runtime_error("invalid Argumen");
+						if(i == lines - 1)	throw runtime_error("invalid Argument");
 					}
 				}
 				mc[j] = bitControlImm(decToBin(arg[2]));
