@@ -13,7 +13,7 @@ string bitControlReg(string inputBit){
 	test<<dec;
 	test>>temp;
 
-	if (temp < 0 || temp >= CHAR_BIT) throw runtime_error("invalid register T_T");
+	if (temp < 0 || temp >= CHAR_BIT) throw runtime_error("exit(1): invalid register T_T");
 
 	string control = "000";
 	int i = control.length()-1;
@@ -33,7 +33,7 @@ string bitControlImm(string inputBit){
 	test<<dec;
 	test>>temp;
 
-	if (temp > SHRT_MAX || temp < SHRT_MIN) throw runtime_error("invalid immediate");
+	if (temp > SHRT_MAX || temp < SHRT_MIN) throw runtime_error("exit(1): invalid immediate");
 
 	string control = "0000000000000000";
 	if(inputBit[0] == '1')
@@ -148,13 +148,13 @@ string to_machine_code(string fileName) {
 		// save label to mem
 		if (arg[1] == ".fill"){
 			for(int i = 0; i < lines;i++){
-				if(mem[i] == arg[0]) throw runtime_error("Duplicate .fill");
+				if(mem[i] == arg[0]) throw runtime_error("exit(1): Duplicate .fill");
 				stringstream mtemp;
 				string addrname;
 				mtemp<<mem[i];
 				mtemp>>addrname;
 				if(addrname == arg[0])
-					throw runtime_error("Duplicate Label");
+					throw runtime_error("exit(1): Duplicate Label");
 			}
 			mem[j] = arg[0];
 		} 
@@ -165,13 +165,13 @@ string to_machine_code(string fileName) {
 			temp >> mem[j];
 			
 			for(int i = 0; i < lines;i++){
-				if(mem[i] == arg[0]) throw runtime_error("Duplicate .fill");
+				if(mem[i] == arg[0]) throw runtime_error("exit(1): Duplicate .fill");
 				stringstream mtemp;
 				string addrname;
 				mtemp<<mem[i];
 				mtemp>>addrname;
 				if(addrname == arg[0])
-					throw runtime_error("Duplicate Label");
+					throw runtime_error("exit(1): Duplicate Label");
 			}
 			mem[j] = arg[0] + " " + mem[j];	
 		}
@@ -195,7 +195,7 @@ string to_machine_code(string fileName) {
 		else input >> arg[0] >> arg[1] >> arg[2] >> arg[3];
 		
 		if(type(arg[0], arg[1]) == 'a') 
-			throw runtime_error("invalid Instruction Command");
+			throw runtime_error("exit(1): invalid Instruction Command");
 		
 		switch(instType[j]) {
 			case 'r': {
@@ -208,7 +208,7 @@ string to_machine_code(string fileName) {
 								num>>arg[k];
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Argument");	
+							if(i == lines - 1)	throw runtime_error("exit(1): invalid Argument");	
 						}
 						
 					}
@@ -234,7 +234,7 @@ string to_machine_code(string fileName) {
 								arg[k] = 'a' + pos;
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Argument");		
+							if(i == lines - 1)	throw runtime_error("exit(1): invalid Argument");		
 						}
 					}
 				}
@@ -252,7 +252,7 @@ string to_machine_code(string fileName) {
 								num>>arg[k];
 								break;
 							}
-							if(i == lines - 1)	throw runtime_error("invalid Argument");		
+							if(i == lines - 1)	throw runtime_error("exit(1): invalid Argument");		
 						}
 					}
 				}
@@ -281,7 +281,7 @@ string to_machine_code(string fileName) {
 							arg[2] = pos;
 							break;
 						}
-						if(i == lines - 1)	throw runtime_error("invalid Argument");
+						if(i == lines - 1)	throw runtime_error("exit(1): invalid Argument");
 					}
 				}
 				mc[j] = bitControlImm(decToBin(arg[2]));

@@ -33,6 +33,7 @@ int main(int argc, char* argv[]) {
 
 	// write file in binary
 	create_file(bin_str, "tests/machine/" + name + ".out.txt");
+	cout<<"exit(0)";
 	
 	return 0;
 	
