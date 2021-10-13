@@ -172,7 +172,7 @@ string to_machine_code(string fileName) {
 		}
 		else input >> arg[0] >> arg[1] >> arg[2] >> arg[3];
 		
-		if(type(arg[0], arg[1]) == 'a' || type(arg[0], arg[1]) == 'f') 
+		if(type(arg[0], arg[1]) == 'a') 
 			throw runtime_error("invalid Instruction Command");
 		
 		switch(instType[j]) {
