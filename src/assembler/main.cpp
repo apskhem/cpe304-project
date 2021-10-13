@@ -31,8 +31,6 @@ int main(int argc, char* argv[]) {
 	// transform string
 	string bin_str = to_machine_code(infile);
 
-	// cout << bin_str << endl;
-
 	// write file in binary
 	create_file(bin_str, "tests/machine/" + name + ".out.txt");
 	

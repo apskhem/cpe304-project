@@ -182,8 +182,10 @@ string to_machine_code(string fileName) {
 								num<<i;
 								num>>arg[k];
 								break;
-							}		
+							}
+							if(i == lines - 1)	throw runtime_error("invalid Label");	
 						}
+						
 					}
 				}
 				mc[j] = rType(arg[0], arg[1], arg[2], arg[3]);
@@ -206,7 +208,8 @@ string to_machine_code(string fileName) {
 							if(arg[k] == name){
 								arg[k] = 'a' + pos;
 								break;
-							}		
+							}
+							if(i == lines - 1)	throw runtime_error("invalid Label");		
 						}
 					}
 				}
@@ -223,7 +226,8 @@ string to_machine_code(string fileName) {
 								num<<i;
 								num>>arg[k];
 								break;
-							}		
+							}
+							if(i == lines - 1)	throw runtime_error("invalid Label");		
 						}
 					}
 				}
@@ -252,6 +256,7 @@ string to_machine_code(string fileName) {
 							arg[2] = pos;
 							break;
 						}
+						if(i == lines - 1)	throw runtime_error("invalid Label");
 					}
 				}
 				mc[j] = bitControlImm(decToBin(arg[2]));
