@@ -149,9 +149,14 @@ string to_machine_code(string fileName) {
 		if (arg[1] == ".fill"){
 			for(int i = 0; i < lines;i++){
 				if(mem[i] == arg[0]) throw runtime_error("Duplicate .fill");
+				stringstream mtemp;
+				string addrname;
+				mtemp<<mem[i];
+				mtemp>>addrname;
+				if(addrname == arg[0])
+					throw runtime_error("Duplicate Label");
 			}
 			mem[j] = arg[0];
-		
 		} 
 		
 		if (instType[j] == 'a') {
@@ -160,11 +165,12 @@ string to_machine_code(string fileName) {
 			temp >> mem[j];
 			
 			for(int i = 0; i < lines;i++){
-				stringstream ggg;
-				string hhh;
-				ggg<<mem[i];
-				ggg>>hhh;
-				if(hhh == arg[0])
+				if(mem[i] == arg[0]) throw runtime_error("Duplicate .fill");
+				stringstream mtemp;
+				string addrname;
+				mtemp<<mem[i];
+				mtemp>>addrname;
+				if(addrname == arg[0])
 					throw runtime_error("Duplicate Label");
 			}
 			mem[j] = arg[0] + " " + mem[j];	
